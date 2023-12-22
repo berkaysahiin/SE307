@@ -76,8 +76,14 @@ WSGI_APPLICATION = 'thesis_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',
+        'NAME': 'pataos',
+        'PORT': '',
+        'HOST': 'OmerCevruk',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
+
     }
 }
 

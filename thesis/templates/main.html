@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <h1>Main Page</h1>
+    
+    <h2>Models:</h2>
+    <ul>
+        <li><a href="{% url 'thesis:institute-list' %}">Institute List</a></li>
+        <li><a href="{% url 'thesis:language-list' %}">Language List</a></li>
+        <li><a href="{% url 'thesis:person-list' %}">Person List</a></li>
+        <li><a href="{% url 'thesis:subject-list' %}">Subject List</a></li>
+        <li><a href="{% url 'thesis:thesis-list' %}">Thesis List</a></li>
+        <li><a href="{% url 'thesis:thesiskeyword-list' %}">Thesis Keyword List</a></li>
+        <li><a href="{% url 'thesis:thesissubject-list' %}">Thesis Subject List</a></li>
+        <li><a href="{% url 'thesis:type-list' %}">Type List</a></li>
+        <li><a href="{% url 'thesis:university-list' %}">University List</a></li>
+    </ul>
+
+    <h2>Details:</h2>
+    <ul>
+        <li><a href="{% url 'thesis:institute-detail' pk=1 %}">Sample Institute Detail</a></li>
+        <li><a href="{% url 'thesis:language-detail' pk=1 %}">Sample Language Detail</a></li>
+        <li><a href="{% url 'thesis:person-detail' pk=1 %}">Sample Person Detail</a></li>
+        <li><a href="{% url 'thesis:subject-detail' pk=1 %}">Sample Subject Detail</a></li>
+        <li><a href="{% url 'thesis:thesis-detail' pk=1 %}">Sample Thesis Detail</a></li>
+        <li><a href="{% url 'thesis:thesiskeyword-detail' pk=1 %}">Sample Thesis Keyword Detail</a></li>
+        <li><a href="{% url 'thesis:thesissubject-detail' pk=1 %}">Sample Thesis Subject Detail</a></li>
+        <li><a href="{% url 'thesis:typedetail' pk=1 %}">Sample Type Detail</a></li>
+        <li><a href="{% url 'thesis:university-detail' pk=1 %}">Sample University Detail</a></li>
+    </ul>
+</body>
+</html>

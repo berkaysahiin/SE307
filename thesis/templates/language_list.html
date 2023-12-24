@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Language List</title>
+</head>
+<body>
+    <h1>Language List</h1>
+    <ul>
+        {% for language in object_list %}
+            <li><a href="{% url 'thesis:language-detail' pk=language.pk %}">{{ language.language_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Thesis Subject List</title>
+</head>
+<body>
+    <h1>Thesis Subject List</h1>
+    <ul>
+        {% for subject in object_list %}
+            <li><a href="{% url 'thesis:thesissubject-detail' pk=subject.pk %}">{{ subject.subject.topic }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University List</title>
+</head>
+<body>
+    <h1>University List</h1>
+    <ul>
+        {% for university in object_list %}
+            <li><a href="{% url 'thesis:university-detail' pk=university.pk %}">{{ university.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

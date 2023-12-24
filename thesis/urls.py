@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import main
+from .views import main, search_view
 
 app_name = 'thesis'
 
@@ -32,4 +32,5 @@ urlpatterns = [
 
     path('university/', views.UniversityListView.as_view(), name='university-list'),
     path('university/<int:pk>/', views.UniversityDetailView.as_view(), name='university-detail'),
+    path('search/', search_view, name='search'),
 ]

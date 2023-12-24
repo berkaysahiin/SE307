@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+
+<body>
+    <h1>Search Results</h1>
+    <form method="get" action="{% url 'thesis:search' %}">
+        <label for="id_table">Select Table:</label>
+        <select name="table" id="id_table">
+            <option value="" selected>-- All Tables --</option>
+            <option value="THESIS Name">Thesis Name</option>
+            <option value="THESIS">Author</option>
+            <option value="institute">Institute</option>
+            <!-- Add options for other tables as needed -->
+        </select>
+
+        <label for="id_query">Search:</label>
+        <input type="text" name="query" id="id_query" value="{{ query }}">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if results %}
+    <h2>Results from {{ selected_table  }}:</h2>
+    <ul>
+        {% for thesis in results %}
+            <li>
+                <strong>Title:</strong> {{ thesis.1 }}<br>
+                <strong>Author:</strong> {{ thesis.3 }} {{ thesis.author.surname }}<br>
+                <strong>Year:</strong> {{ thesis.4 }}<br>
+                <strong>Type:</strong> {{ thesis.5 }}<br>
+                <strong>University:</strong> {{ thesis.6 }}<br>
+                <strong>Institute:</strong> {{ thesis.7 }}<br>
+                <strong>Number of Pages:</strong> {{ thesis.8 }}<br>
+                <strong>Language:</strong> {{ thesis.9 }}<br>
+                <strong>Supervisor:</strong> {{ thesis.10 }} {{ thesis.superviser.surname }}<br>
+                {% if thesis.11 %}
+                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.12}} {{ thesis.cosuperviser.surname }}<br>
+                {% endif %}
+                <strong>Submission Date:</strong> {{ thesis.13 }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+</body>
+</html>

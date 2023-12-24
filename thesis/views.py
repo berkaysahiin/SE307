@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
-
+from django.db import connection
 class InstituteListView(ListView):
     model = Institute
     template_name = 'institute_list.html'
@@ -23,7 +23,7 @@ class PersonListView(ListView):
     template_name = 'person_list.html'
 
 class PersonDetailView(DetailView):
-    model = Person
+    model = Person 
     template_name = 'person_detail.html'
 
 class SubjectListView(ListView):
@@ -76,3 +76,33 @@ class UniversityDetailView(DetailView):
 
 def main(request):
     return render(request, 'main.html')
+
+
+def search_view(request):
+    template_name = 'search_results.html'
+    query = request.GET.get('query')
+
+    if query:
+        # Sanitize the input to prevent SQL injection
+        sanitized_query = f"%{query}%"
+
+        # Perform a raw SQL query to select the author column from the Thesis table
+        raw_query = """
+            SELECT *
+            FROM THESIS
+            WHERE AUTHOR_ID IN (
+                SELECT PERSON_ID 
+                FROM PERSON
+                WHERE name LIKE %s OR surname LIKE %s
+            )
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(raw_query, [sanitized_query, sanitized_query])
+            results = cursor.fetchall()#returns a list of tuples
+
+    else:
+        results = None
+
+    
+    context = {'results': results, 'query': query}
+    return render(request, template_name, context)

@@ -20,6 +20,25 @@
         <p>Co-Supervisor: {{ object.cosuperviser }} </p>
     {% endif %}
     <p>Submission Date: {{ object.submission_date }}</p>
-    <!-- Add more details as needed -->
+
+    <h2>Keywords</h2>
+    <ul>
+        {% for thesis_keyword in object.thesiskeyword_set.all %}
+            <li>{{ thesis_keyword.keyword }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Display Subjects -->
+     <h2>Subjects</h2>
+    {% if object.thesissubject_set.exists %}
+    <ul>
+        {% for thesis_subject in object.thesissubject_set.all %}
+            <li>{{ thesis_subject.subject.topic }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No subjects associated with this thesis.</p>
+    {% endif %}
+    
 </body>
 </html>

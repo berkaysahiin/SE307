@@ -1,44 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Thesis Detail</title>
+    <title>Thesis Information</title>
 </head>
 <body>
-    <h1>Thesis Detail</h1>
-    <p>Thesis ID: {{ object.thesis_no }}</p>
-    <p>Title: {{ object.title }}</p>
-    <p>Abstract: {{ object.abstract }}</p>
-    <p>Author: {{ object.author }} </p>
-    <p>Year: {{ object.year }}</p>
-    <p>Type: {{ object.type }}</p>
-    <p>University: {{ object.university }}</p>
-    <p>Institute: {{ object.institute }}</p>
-    <p>Number of Pages: {{ object.number_of_pages }}</p>
-    <p>Language: {{ object.language }}</p>
-    <p>Supervisor: {{ object.superviser }}</p>
-    {% if object.cosuperviser %}
-        <p>Co-Supervisor: {{ object.cosuperviser }} </p>
-    {% endif %}
-    <p>Submission Date: {{ object.submission_date }}</p>
 
-    <h2>Keywords</h2>
-    <ul>
-        {% for thesis_keyword in object.thesiskeyword_set.all %}
-            <li>{{ thesis_keyword.keyword }}</li>
-        {% endfor %}
-    </ul>
+<h1>Thesis Information</h1>
+<ul>
+    <li><strong>Thesis Number:</strong> {{ object.thesis_no }}</li>
+    <li><strong>Title:</strong> {{ object.title }}</li>
+    <li><strong>Abstract:</strong> {{ object.abstract }}</li>
+    <li><strong>Author:</strong> {{ object.author }}</li>
+    <li><strong>Year:</strong> {{ object.year }}</li>
+    <li><strong>Type:</strong> {{ object.type }}</li>
+    <li><strong>University:</strong> {{ object.university }}</li>
+    <li><strong>Institute:</strong> {{ object.institute }}</li>
+    <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
+    <li><strong>Language:</strong> {{ object.language }}</li>
+    <li><strong>Superviser:</strong> {{ object.superviser }}</li>
+    <li><strong>Co-superviser:</strong> {{ object.cosuperviser }}</li>
+    <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>
+</ul>
 
-    <!-- Display Subjects -->
-     <h2>Subjects</h2>
-    {% if object.thesissubject_set.exists %}
-    <ul>
-        {% for thesis_subject in object.thesissubject_set.all %}
-            <li>{{ thesis_subject.subject.topic }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No subjects associated with this thesis.</p>
-    {% endif %}
-    
 </body>
 </html>

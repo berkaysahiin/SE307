@@ -109,8 +109,11 @@ def search_view(request):
     else:
         results = None
 
-    
-    context = {'results': results, 'query': query}
+    print(results[0][0])
+    thesis_instance = Thesis.objects.get(thesis_no=results[0][0])
+    results = []
+    results.append(thesis_instance)
+    context = {'results': thesis_instance, 'query': query}
     return render(request, template_name, context)
 
 class ThesisCreateView(CreateView):

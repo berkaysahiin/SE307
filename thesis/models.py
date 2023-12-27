@@ -17,6 +17,9 @@ class Institute(models.Model):
         managed = False
         db_table = 'INSTITUTE'
 
+    def __str__(self) -> str:
+        return f'{self.name}'
+
 
 class Language(models.Model):
     language_id = models.IntegerField(db_column='LANGUAGE_ID', primary_key=True)  # Field name made lowercase.
@@ -25,6 +28,9 @@ class Language(models.Model):
     class Meta:
         managed = False
         db_table = 'LANGUAGE'
+
+    def __str__(self):
+        return f'{self.language_name}'
 
 
 class Person(models.Model):
@@ -37,6 +43,9 @@ class Person(models.Model):
         managed = False
         db_table = 'PERSON'
 
+    def __str__(self):
+        return f'{self.name} {self.surname}'
+
 
 class Subject(models.Model):
     subject_id = models.IntegerField(db_column='SUBJECT_ID', primary_key=True)  # Field name made lowercase.
@@ -45,6 +54,9 @@ class Subject(models.Model):
     class Meta:
         managed = False
         db_table = 'SUBJECT'
+
+    def __str__(self) -> str:
+        return f'{self.topic}'
 
 
 class Thesis(models.Model):
@@ -76,6 +88,9 @@ class ThesisKeyword(models.Model):
         db_table = 'THESIS_KEYWORD'
         unique_together = (('thesis_no', 'keyword'),)
 
+    def __str__(self) -> str:
+        return f'{self.keyword}'
+
 
 class ThesisSubject(models.Model):
     thesis_no = models.OneToOneField(Thesis, models.DO_NOTHING, db_column='THESIS_NO', primary_key=True)  # Field name made lowercase. The composite primary key (THESIS_NO, SUBJECT_ID) found, that is not supported. The first column is selected.
@@ -94,6 +109,9 @@ class Type(models.Model):
     class Meta:
         managed = False
         db_table = 'TYPE'
+    
+    def __str__(self) -> str:
+        return f'{self.type_name}'
 
 
 class University(models.Model):
@@ -104,3 +122,6 @@ class University(models.Model):
     class Meta:
         managed = False
         db_table = 'UNIVERSITY'
+
+    def __str__(self) -> str:
+        return f'{self.name}'

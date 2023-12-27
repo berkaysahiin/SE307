@@ -1,7 +1,13 @@
 from django.views.generic import ListView, DetailView
+
+from thesis.forms import ThesisForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
+from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse_lazy
+
+
 class InstituteListView(ListView):
     model = Institute
     template_name = 'institute_list.html'
@@ -106,3 +112,16 @@ def search_view(request):
     
     context = {'results': results, 'query': query}
     return render(request, template_name, context)
+
+class ThesisCreateView(CreateView):
+    model = Thesis
+    template_name = 'thesis_form.html'
+    form_class = ThesisForm
+    success_url = reverse_lazy(ThesisListView)
+
+
+class ThesisUpdateView(UpdateView):
+    model = Thesis
+    form_class = ThesisForm
+    template_name = 'thesis_form.html'
+    success_url = reverse_lazy('thesis')

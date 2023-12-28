@@ -10,24 +10,34 @@
         <label for="id_table">Select Table:</label>
         <select name="table" id="id_table">
             <option value="" selected>-- All Tables --</option>
-            <option value="THESIS Name">Thesis Name</option>
-            <option value="THESIS">Author</option>
+            <option value="title">Title</option>
+            <option value="author">Author</option>
             <option value="institute">Institute</option>
-            <!-- Add options for other tables as needed -->
+            <option value="superviser">Superviser</option>
+            <option value="cosuperviser">Co-Superviser</option>
+            <option value="university">University</option>
+            <option value="type">Type</option>
+            <option value="language">Language</option>
+            <option value="year">Year</option>
+            <option value="submission_date">Submission Date</option>
+            <option value="number_of_pages">Number of Pages</option>
+            <option value="keywords">Keywords</option>
+            <option value="abstract">Abstract</option>
         </select>
 
         <label for="id_query">Search:</label>
         <input type="text" name="query" id="id_query" value="{{ query }}">
         <input type="submit" value="Search">
     </form>
+  
 
     {% if results %}
     <h2>Results from {{ selected_table  }}:</h2>
     <ul>
         {% for thesis in results %}
             <li>
-                <strong>Title:</strong> {{ thesis.1 }}<br>
-                <strong>Author:</strong> {{ thesis.3 }} {{ thesis.author.surname }}<br>
+                <strong>Title:</strong> {{ thesis.title }}<br>
+                <strong>Author:</strong> {{ thesis.author }} {{ thesis.author.surname }}<br>
                 <strong>Year:</strong> {{ thesis.4 }}<br>
                 <strong>Type:</strong> {{ thesis.5 }}<br>
                 <strong>University:</strong> {{ thesis.6 }}<br>

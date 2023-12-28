@@ -85,36 +85,33 @@ def main(request):
 
 
 def search_view(request):
-    template_name = 'search_results.html'
+
     query = request.GET.get('query')
-
-    if query:
-        # Sanitize the input to prevent SQL injection
-        sanitized_query = f"%{query}%"
-
-        # Perform a raw SQL query to select the author column from the Thesis table
-        raw_query = """
-            SELECT *
-            FROM THESIS
-            WHERE AUTHOR_ID IN (
-                SELECT PERSON_ID 
-                FROM PERSON
-                WHERE name LIKE %s OR surname LIKE %s
-            )
-        """
-        with connection.cursor() as cursor:
-            cursor.execute(raw_query, [sanitized_query, sanitized_query])
-            results = cursor.fetchall()#returns a list of tuples
-
+    selected_table = request.GET.get('table')
+    print(selected_table)
+    if query and selected_table:
+        if selected_table == 'title':
+            thesis = Thesis.objects.all().filter(title__icontains=query)
+            results = thesis
+        elif selected_table == 'author':
+            thesis = Thesis.objects.all().filter(author__name__icontains=query)
+            results = thesis
+        #TODO: add other tables
     else:
         results = None
 
-    print(results[0][0])
-    thesis_instance = Thesis.objects.get(thesis_no=results[0][0])
-    results = []
-    results.append(thesis_instance)
-    context = {'results': thesis_instance, 'query': query}
-    return render(request, template_name, context)
+
+    context = {
+        'query': query,
+        'selected_table': selected_table,
+        'results': results,
+    }
+    
+    print(results)
+
+    return render(request, 'search_results.html', context)
+ 
+
 
 class ThesisCreateView(CreateView):
     model = Thesis

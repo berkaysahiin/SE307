@@ -134,7 +134,6 @@ def search_view(request):
         thesisno = None
    
     context['thesisno'] = thesisno
-    context['selected_table'] = selected_table
     context['results'] = None #results will be a list of Thesis objects but for now it is None
     
 

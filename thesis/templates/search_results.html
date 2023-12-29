@@ -7,7 +7,40 @@
 <body>
     <h1>Search Results</h1>
     <form method="get" action="{% url 'thesis:search' %}">
-        <label for="id_table">Select Table:</label>
+        <div>
+            <label for ="id_table">enter a thesis no</label>
+            <label for="id_query">Search:</label>
+            <input type="text" name="thesisno" id="id_query" value="">
+            
+                
+        </div>
+        <div>
+            <label for="id_table">title</label>
+            <label for="id_query">Search:</label>
+            <input type="text" name="title" id="id_query" value="">
+            
+        </div>
+        <div>
+            <label for="id_table">Abstract </label>
+            <label for="id_query">Search:</label>
+            <input type="text" name="abstract" id="id_query" value="">
+        <div>
+            <label for="id_table">Chose a University:</label>
+            <select name="unitable" id="id_table">
+                {% for uni in university %}
+                    <option value="{{ uni.name }}">{{uni.name}}</option>
+                {% endfor %}
+                <option value=""></option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Chose a Institute:</label>
+            <select name="intable" id="id_table">
+                {% for ins in institute %}
+                    <option value="{{ ins.name }}">{{ins.name}}</option>
+                {% endfor %}
+                <option value=""></option>
+            </select>
         <select name="table" id="id_table">
             <option value="" selected>-- All Tables --</option>
             <option value="title">Title</option>
@@ -38,10 +71,10 @@
             <li>
                 <strong>Title:</strong> {{ thesis.title }}<br>
                 <strong>Author:</strong> {{ thesis.author }} {{ thesis.author.surname }}<br>
-                <strong>Year:</strong> {{ thesis.4 }}<br>
+                <strong>Year:</strong> {{ thesis.year }}<br>
                 <strong>Type:</strong> {{ thesis.5 }}<br>
-                <strong>University:</strong> {{ thesis.6 }}<br>
-                <strong>Institute:</strong> {{ thesis.7 }}<br>
+                <strong>University:</strong> {{ thesis.university }}<br>
+                <strong>Institute:</strong> {{ thesis.institute }}<br>
                 <strong>Number of Pages:</strong> {{ thesis.8 }}<br>
                 <strong>Language:</strong> {{ thesis.9 }}<br>
                 <strong>Supervisor:</strong> {{ thesis.10 }} {{ thesis.superviser.surname }}<br>

@@ -88,7 +88,28 @@ def search_view(request):
 
     query = request.GET.get('query')
     selected_table = request.GET.get('table')
+    uni_table = request.GET.get('unitable')
+    ins_table = request.GET.get('instable')
+    thesisNo_string = request.GET.get('thesisno')
+    title_string = request.GET.get('title')
+    abstract_string = request.GET.get('abstract')
+    
+    
     print(selected_table)
+    print(uni_table)
+    #show foreign key tables in the search page
+    university = University.objects.all().order_by('name')
+    institute = Institute.objects.all().order_by('name')
+
+    if len(str(thesisNo_string)) <= 7 and len(str(thesisNo_string))>0: #this way we can check if the thesis number is valid or not    
+        try:
+            thesisno = Thesis.objects.get(thesis_no=thesisNo_string) # burayı neden yaptığımı hatırlamıyorum şuanlık önemsiz
+        except Thesis.DoesNotExist:
+            thesisno = None
+            pass
+    else:
+        thesisno = None
+   
     if query and selected_table:
         if selected_table == 'title':
             thesis = Thesis.objects.all().filter(title__icontains=query)
@@ -96,15 +117,28 @@ def search_view(request):
         elif selected_table == 'author':
             thesis = Thesis.objects.all().filter(author__name__icontains=query)
             results = thesis
-        #TODO: add other tables
+        elif selected_table == 'field':  # Add this case for the 'field' table
+            thesis = Thesis.objects.all().filter(field__icontains=query)
+            results = thesis
+        elif selected_table == 'year':  # Add this case for the 'year' table
+            thesis = Thesis.objects.all().filter(year__icontains=query)
+            results = thesis
+        elif selected_table == 'institute':  # Add this case for the 'institute' table
+            thesis = Thesis.objects.all().filter(institute__name__icontains=query)
+            results = thesis
+        # Add other cases for other tables here
+        else:
+            results = None
     else:
         results = None
 
-
     context = {
+        'thesisno': thesisno,
         'query': query,
+        'university': university,
         'selected_table': selected_table,
         'results': results,
+        'institute': institute,
     }
     
     print(results)

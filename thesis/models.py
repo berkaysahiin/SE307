@@ -77,6 +77,8 @@ class Thesis(models.Model):
     class Meta:
         managed = False
         db_table = 'THESIS'
+    def __str__(self) -> str:
+        return f'{self.thesis_no}'
 
 
 class ThesisKeyword(models.Model):

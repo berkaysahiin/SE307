@@ -38,8 +38,6 @@ class ThesisForm(forms.ModelForm):
         # Save the keywords
         keywords = self.cleaned_data.get('keywords', '')
         keyword_list = [keyword.strip() for keyword in keywords.split(',')]
-
-        print(keyword_list[0])
         
         # Clear existing keywords for the thesis
         ThesisKeyword.objects.filter(thesis_no=thesis).delete()

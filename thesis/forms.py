@@ -1,11 +1,15 @@
 # forms.py in your 'thesis' app
 from django import forms
-from .models import Person, Thesis, Type
+from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='Search', max_length=100)
 
+
 class ThesisForm(forms.ModelForm):
+    subjects = forms.ModelMultipleChoiceField(queryset=Subject.objects.all(), required=False)
+    keywords = forms.CharField(max_length=255, required=False, help_text='Enter keywords separated by commas.')
+
     class Meta:
         model = Thesis
         fields = '__all__'
@@ -17,3 +21,31 @@ class ThesisForm(forms.ModelForm):
         self.fields['author'].queryset = Person.objects.all()
         self.fields['type'].queryset = Type.objects.all()
         self.fields['cosuperviser'].queryset = Person.objects.all()
+
+        # Set the queryset for the subjects field
+        self.fields['subjects'].queryset = Subject.objects.all()
+
+    def save(self, commit=True):
+        # Save the main Thesis model
+        thesis = super().save(commit=commit)
+
+        # Save the related subjects
+        subjects = self.cleaned_data.get('subjects', [])
+        ThesisSubject.objects.filter(thesis_no=thesis).delete()
+        for subject in subjects:
+            ThesisSubject.objects.create(thesis_no=thesis, subject=subject)
+
+        # Save the keywords
+        keywords = self.cleaned_data.get('keywords', '')
+        keyword_list = [keyword.strip() for keyword in keywords.split(',')]
+
+        print(keyword_list[0])
+        
+        # Clear existing keywords for the thesis
+        ThesisKeyword.objects.filter(thesis_no=thesis).delete()
+
+        # Add new keywords
+        for keyword in keyword_list:
+            ThesisKeyword.objects.create(thesis_no=thesis, keyword=keyword)
+
+        return thesis

@@ -93,6 +93,8 @@ def search_view(request):
     thesisNo_string = request.GET.get('thesisno')
     title_string = request.GET.get('title')
     abstract_string = request.GET.get('abstract')
+    #TODO add  every field  to the template so that we can search by every field
+    #later on  I will stack if statements to filter the Thsesis.objects.all() by the selected table
     
     
     print(selected_table)

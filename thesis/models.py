@@ -74,6 +74,14 @@ class Thesis(models.Model):
     cosuperviser = models.ForeignKey(Person, models.DO_NOTHING, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
     submission_date = models.DateField(db_column='SUBMISSION_DATE')  # Field name made lowercase.
 
+    @property
+    def keywords(self):
+        return ThesisKeyword.objects.filter(thesis_no=self.thesis_no).values_list('keyword', flat=True)
+
+    @property
+    def subjects(self):
+        return Subject.objects.filter(thesissubject__thesis_no=self.thesis_no).values_list('topic', flat=True)
+
     class Meta:
         managed = False
         db_table = 'THESIS'

@@ -17,9 +17,17 @@
     <li><strong>Institute:</strong> {{ object.institute }}</li>
     <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
     <li><strong>Language:</strong> {{ object.language }}</li>
-    <li><strong>Superviser:</strong> {{ object.superviser }}</li>
-    <li><strong>Co-superviser:</strong> {{ object.cosuperviser }}</li>
+    <li><strong>Supervisor:</strong> {{ object.superviser }}</li>
+    <li><strong>Co-supervisor:</strong> {{ object.cosuperviser }}</li>
     <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>
+    <li><strong>Keywords:</strong> 
+        {% if object.keywords %}
+            {{ object.keywords|join:", " }}
+        {% else %}
+            No keywords available.
+        {% endif %}
+    </li>
+    <li><strong>Subjects:</strong> {{ object.subjects|join:", " }}</li>
 </ul>
 
 </body>

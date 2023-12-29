@@ -18,7 +18,13 @@
     <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
     <li><strong>Language:</strong> {{ object.language }}</li>
     <li><strong>Supervisor:</strong> {{ object.superviser }}</li>
-    <li><strong>Co-supervisor:</strong> {{ object.cosuperviser }}</li>
+    <li><strong>Cosuperviser:</strong> 
+        {% if object.cosuperviser %}
+            {{ object.cosuperviser|join:", " }}
+        {% else %}
+            -
+        {% endif %}
+    </li>
     <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>
     <li><strong>Keywords:</strong> 
         {% if object.keywords %}
@@ -27,7 +33,13 @@
             No keywords available.
         {% endif %}
     </li>
-    <li><strong>Subjects:</strong> {{ object.subjects|join:", " }}</li>
+    <li><strong>Subjects:</strong> 
+        {% if object.subjects %}
+            {{ object.subjects|join:", " }}
+        {% else %}
+            No subjects available.
+        {% endif %}
+    </li>
 </ul>
 
 </body>

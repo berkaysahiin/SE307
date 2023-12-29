@@ -8,29 +8,117 @@
     <h1>Search Results</h1>
     <form method="get" action="{% url 'thesis:search' %}">
         <div>
-            <label for ="id_table">enter a thesis no</label>
-            <label for="id_query">Search:</label>
+            <label for="id_table">Enter a thesis no:</label>
             <input type="text" name="thesisno" id="id_query" value="">
-            
-                
         </div>
         <div>
-            <label for="id_table">title</label>
-            <label for="id_query">Search:</label>
+            <label for="id_table">Title:</label>
             <input type="text" name="title" id="id_query" value="">
-            
         </div>
         <div>
-            <label for="id_table">Abstract </label>
-            <label for="id_query">Search:</label>
+            <label for="id_table">Abstract:</label>
             <input type="text" name="abstract" id="id_query" value="">
+        </div>
+        <div>
+            <label for="id_table">Author:</label>
+            <select name="author" id="id_table">
+                {% for auth in person %}
+                    <option value="{{ auth }}">{{auth}}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Superviser:</label>
+            <select name="superviser" id="id_table">
+                {% for sup in person %}
+                    <option value="{{ sup }}">{{sup}}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Co-Superviser:</label>
+            <select name="cosuperviser" id="id_table">
+                {% for cosup in person %}
+                    <option value="{{ cosup }}">{{cosup}}</option>
+                {% endfor %}
+                <option value="None">-None-</option> <!-- None tag is for choosing the null co superviser -->
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Choose a Type:</label>
+            <select name="typetable" id="id_table">
+                {% for typ in type %}
+                    <option value="{{ typ }}">{{ typ }}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Choose a Language:</label>
+            <select name="langtable" id="id_table">
+                {% for lang in language %}
+                    <option value="{{ lang }}">{{ lang }}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Choose a University:</label>
+            <select name="unitable" id="id_table">
+                {% for uni in university %}
+                    <option value="{{ uni.name }}">{{uni.name}}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Choose an Institute:</label>
+            <select name="intable" id="id_table">
+                {% for ins in institute %}
+                    <option value="{{ ins.name }}">{{ins.name}}</option>
+                {% endfor %}
+                <option value="any">-any-</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Choose a Table:</label>
+            <select name="table" id="id_table">
+                <option value="" selected>-- All Tables --</option>
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+                <option value="institute">Institute</option>
+                <option value="superviser">Superviser</option>
+            </select>
+        </div>
+        <div>
+            <label for="id_table">Beginning Date:</label>
+            <input type="date" name="beginning_date" id="id_query" value="submitdatebegin">
+        </div>
+        <div>
+            <label for="id_table">Ending Date:</label>
+            <input type="date" name="ending_date" id="id_query" value="submitdateend">
+        </div>
+        <div>
+            <div>
+                <label for="id_table">Number of Pages Min:</label>
+                <input type="number" name="number_of_pages_min" id="id_query" value="numberofpagesmin">
+            </div>
+            <div>
+                <label for="id_table">Number of Pages Max:</label>
+                <input type="number" name="number_of_pages_max" id="id_query" value="numberofpagemax">
+            </div>
+        </div>
+
         <div>
             <label for="id_table">Chose a University:</label>
             <select name="unitable" id="id_table">
                 {% for uni in university %}
                     <option value="{{ uni.name }}">{{uni.name}}</option>
                 {% endfor %}
-                <option value=""></option>
+                <option value="any">-any-</option>
             </select>
         </div>
         <div>
@@ -39,33 +127,15 @@
                 {% for ins in institute %}
                     <option value="{{ ins.name }}">{{ins.name}}</option>
                 {% endfor %}
-                <option value=""></option>
+                <option value="any">-any-</option>
             </select>
-        <select name="table" id="id_table">
-            <option value="" selected>-- All Tables --</option>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="institute">Institute</option>
-            <option value="superviser">Superviser</option>
-            <option value="cosuperviser">Co-Superviser</option>
-            <option value="university">University</option>
-            <option value="type">Type</option>
-            <option value="language">Language</option>
-            <option value="year">Year</option>
-            <option value="submission_date">Submission Date</option>
-            <option value="number_of_pages">Number of Pages</option>
-            <option value="keywords">Keywords</option>
-            <option value="abstract">Abstract</option>
-        </select>
-
-        <label for="id_query">Search:</label>
-        <input type="text" name="query" id="id_query" value="{{ query }}">
-        <input type="submit" value="Search">
+        </div>
+    
     </form>
   
 
     {% if results %}
-    <h2>Results from {{ selected_table  }}:</h2>
+    <h2>Results:</h2>
     <ul>
         {% for thesis in results %}
             <li>
@@ -85,8 +155,7 @@
             </li>
         {% endfor %}
     </ul>
-{% else %}
-    <p>No results found.</p>
+
 {% endif %}
 </body>
 </html>

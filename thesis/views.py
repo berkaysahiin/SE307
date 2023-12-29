@@ -85,23 +85,44 @@ def main(request):
 
 
 def search_view(request):
-
-    query = request.GET.get('query')
-    selected_table = request.GET.get('table')
-    uni_table = request.GET.get('unitable')
-    ins_table = request.GET.get('instable')
+# each of this values can be None
+#TODO clean this mess by dividing variables into groups by types
     thesisNo_string = request.GET.get('thesisno')
     title_string = request.GET.get('title')
     abstract_string = request.GET.get('abstract')
-    #TODO add  every field  to the template so that we can search by every field
+    author_table = request.GET.get('author')        #this is a person
+    type_table = request.GET.get('type')
+    language_table = request.GET.get('language')
+    supervisor_table = request.GET.get('supervisor') #this is a person
+    coSupervisor_table = request.GET.get('cosupervisor') #this is a person
+    submitDateBegin_date = request.GET.get('beginning_date')
+    submitDateEnd_date = request.GET.get('ending_date') #*date format is  yyyy-mm-dd
+    numberOfPagesMin_int = request.GET.get('number_of_pages_min')
+    numberOfPagesMax_int = request.GET.get('number_of_pages_max')
+    uni_table = request.GET.get('unitable')
+    ins_table = request.GET.get('instable')
+
+    
+    print("pages",numberOfPagesMax_int)# this is where I test if the values are working or not
+    
+    
+    context = {}
+    
     #later on  I will stack if statements to filter the Thsesis.objects.all() by the selected table
     
-    
-    print(selected_table)
-    print(uni_table)
     #show foreign key tables in the search page
     university = University.objects.all().order_by('name')
     institute = Institute.objects.all().order_by('name')
+    person = Person.objects.all().order_by('surname')
+    type = Type.objects.all().order_by('type_name')
+    language = Language.objects.all().order_by('language_name')
+    
+    
+    context['university'] = university
+    context['institute'] = institute
+    context['person'] = person
+    context['type'] = type
+    context['language'] = language
 
     if len(str(thesisNo_string)) <= 7 and len(str(thesisNo_string))>0: #this way we can check if the thesis number is valid or not    
         try:
@@ -112,38 +133,11 @@ def search_view(request):
     else:
         thesisno = None
    
-    if query and selected_table:
-        if selected_table == 'title':
-            thesis = Thesis.objects.all().filter(title__icontains=query)
-            results = thesis
-        elif selected_table == 'author':
-            thesis = Thesis.objects.all().filter(author__name__icontains=query)
-            results = thesis
-        elif selected_table == 'field':  # Add this case for the 'field' table
-            thesis = Thesis.objects.all().filter(field__icontains=query)
-            results = thesis
-        elif selected_table == 'year':  # Add this case for the 'year' table
-            thesis = Thesis.objects.all().filter(year__icontains=query)
-            results = thesis
-        elif selected_table == 'institute':  # Add this case for the 'institute' table
-            thesis = Thesis.objects.all().filter(institute__name__icontains=query)
-            results = thesis
-        # Add other cases for other tables here
-        else:
-            results = None
-    else:
-        results = None
-
-    context = {
-        'thesisno': thesisno,
-        'query': query,
-        'university': university,
-        'selected_table': selected_table,
-        'results': results,
-        'institute': institute,
-    }
+    context['thesisno'] = thesisno
+    context['selected_table'] = selected_table
+    context['results'] = None #results will be a list of Thesis objects but for now it is None
     
-    print(results)
+
 
     return render(request, 'search_results.html', context)
  

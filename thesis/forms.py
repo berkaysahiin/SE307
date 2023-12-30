@@ -180,6 +180,24 @@ class InstituteForm(forms.ModelForm):
         inst = super().save(commit=commit)
         return inst
 
+
+# --- SUBJECT ---
+    
+class SubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subject
+        fields = ['topic']
+
+    def __init__(self, *args, **kwargs):
+        super(SubjectForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        if not self.instance.subject_id:
+            self.instance.subject_id = generate_unique_subject_id()
+        
+        subject = super().save(commit=commit)
+        return subject
+
 # --- UTILITIES ---
 
 def generate_unique_thesis_no():
@@ -208,4 +226,11 @@ def generate_unique_institute_id():
         new_id = random.randint(1,10000)
 
         if not Institute.objects.filter(institute_id=new_id).exists():
+            return new_id
+
+def generate_unique_subject_id():
+    while True:
+        new_id = random.randint(1,10000)
+
+        if not Subject.objects.filter(subject_id=new_id).exists():
             return new_id

@@ -12,5 +12,6 @@
             <li><a href="{% url 'thesis:subject-detail' pk=subject.pk %}">{{ subject.topic }}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'thesis:subject_create' %}">Add Subject</a>
 </body>
 </html>

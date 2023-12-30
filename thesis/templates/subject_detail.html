@@ -9,4 +9,5 @@
     <p>Topic: {{ object.topic }}</p>
     <!-- Add more details as needed -->
 </body>
+    <a href="{% url 'thesis:subject_update' pk=object.subject_id %}">Edit Subject</a>
 </html>

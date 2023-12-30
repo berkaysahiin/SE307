@@ -100,10 +100,12 @@ def search_view(request):
             language = form.cleaned_data['language']
             university = form.cleaned_data['university']
             institute = form.cleaned_data['institute']
-            beginning_date = form.cleaned_data['beginning_date']
-            ending_date = form.cleaned_data['ending_date']
+            submission_beginning_date = form.cleaned_data['submission_beginning_date']
+            submission_ending_date = form.cleaned_data['submission_ending_date']
             number_of_pages_max = form.cleaned_data['number_of_pages_max']
             number_of_pages_min = form.cleaned_data['number_of_pages_min']
+            years_choice = form.cleaned_data['years_choice']
+            year = form.cleaned_data['year']
             
             results = None
             thesis = Thesis.objects.all()
@@ -138,11 +140,11 @@ def search_view(request):
                 thesis = thesis.filter(institute__name__contains=institute.name)
                 changed = True
                 
-            if beginning_date != None:
-                thesis = thesis.filter(submission_date__gte=beginning_date)
+            if submission_beginning_date != None:
+                thesis = thesis.filter(submission_date__gte=submission_beginning_date)
                 changed = True
-            if ending_date != None:
-                thesis = thesis.filter(submission_date__lte=ending_date)
+            if submission_ending_date != None:
+                thesis = thesis.filter(submission_date__lte=submission_ending_date)
                 changed = True
             if number_of_pages_max != None:
                 thesis = thesis.filter(number_of_pages__lte=number_of_pages_max)
@@ -150,9 +152,16 @@ def search_view(request):
             if number_of_pages_min != None:
                 thesis = thesis.filter(number_of_pages__gte=number_of_pages_min)
                 changed = True 
-                
-        
-            
+            if years_choice != None:
+                if year != None:
+                    if years_choice == 'at_this_date':
+                        thesis = thesis.filter(year=year)
+                    elif years_choice == 'before_this_date':
+                        thesis = thesis.filter(year__lte=year)
+                    elif years_choice == 'after_this_date':
+                        thesis = thesis.filter(year__gte=year)
+                    changed = True
+                                    
     if changed == False:
         thesis = None
                                     

@@ -14,11 +14,19 @@ class SearchForm(forms.Form):
     language = forms.ModelChoiceField(queryset=Language.objects.all().order_by("language_name"), required=False)  # assuming you have a Language model
     university = forms.ModelChoiceField(queryset=University.objects.all().order_by("name"), required=False)#TODO fix institute appearing twice
     institute = forms.ModelChoiceField(queryset=Institute.objects.all().order_by("name"), required=False) #TODO maybe connect institute to university 
-    beginning_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd')
-    ending_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd',)
+    submission_beginning_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd')
+    submission_ending_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd',)
     number_of_pages_min = forms.IntegerField(required=False)
     number_of_pages_max = forms.IntegerField(required=False)
     abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)
+    YEARS_CHOICES = [
+        ("at_this_date", 'at this date'),
+        ("before_this_date", 'before this date'),
+        ("after_this_date", 'after this date')
+    ]
+
+    years_choice = forms.ChoiceField(choices=YEARS_CHOICES, required=False, widget=forms.Select)
+    year = forms.IntegerField(required=False)
 
 
 class ThesisForm(forms.ModelForm):

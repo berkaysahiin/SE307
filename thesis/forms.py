@@ -25,6 +25,17 @@ class ThesisForm(forms.ModelForm):
         # Set the queryset for the subjects field
         self.fields['subjects'].queryset = Subject.objects.all()
 
+        if self.instance:
+            initial_keywords = ', '.join(
+                ThesisKeyword.objects.filter(thesis_no=self.instance).values_list('keyword', flat=True)
+            )
+            self.fields['keywords'].initial = initial_keywords
+            print(self.fields['keywords'].initial)
+        else:
+            print('self.instance does not exist') 
+
+        
+
     def save(self, commit=True):
         # Save the main Thesis model
         thesis = super().save(commit=commit)

@@ -154,3 +154,4 @@ class ThesisUpdateView(UpdateView):
     form_class = ThesisForm
     template_name = 'thesis_form.html'
     success_url = reverse_lazy('thesis')
+

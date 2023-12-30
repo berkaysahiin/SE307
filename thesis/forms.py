@@ -1,9 +1,25 @@
 # forms.py in your 'thesis' app
 from django import forms
-from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type
+from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University, Institute, Language
 
 class SearchForm(forms.Form):
-    query = forms.CharField(label='Search', max_length=100)
+    thesisno = forms.CharField(required=False)
+    title = forms.CharField(required=False)
+    
+    author = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
+    superviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
+    cosuperviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
+    type = forms.ModelChoiceField(queryset=Type.objects.all().order_by("type_name"), required=False)
+    language = forms.ModelChoiceField(queryset=Language.objects.all().order_by("language_name"), required=False)  # assuming you have a Language model
+    university = forms.ModelChoiceField(queryset=University.objects.all().order_by("name"), required=False)
+    institute = forms.ModelChoiceField(queryset=Institute.objects.all().order_by("name"), required=False)  
+    beginning_date = forms.DateField(widget = forms.DateInput(format="%y%m%s"),required=False, initial='2010-12-23',
+                                     help_text='Enter Date as yyyy-mm-dd')
+    ending_date = forms.DateField(widget = forms.DateInput(format="%y%m%s"),required=False, initial='2010-12-23',
+                                  help_text='Enter Date as yyyy-mm-dd',)
+    number_of_pages_min = forms.IntegerField(required=False)
+    number_of_pages_max = forms.IntegerField(required=False)
+    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)
 
 
 class ThesisForm(forms.ModelForm):

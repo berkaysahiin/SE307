@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 
-from thesis.forms import ThesisForm
+from thesis.forms import ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
@@ -85,25 +85,12 @@ def main(request):
 
 
 def search_view(request):
-# each of this values can be None
-#TODO clean this mess by dividing variables into groups by types
-    thesisNo_string = request.GET.get('thesisno')
-    title_string = request.GET.get('title')
-    abstract_string = request.GET.get('abstract')
-    author_table = request.GET.get('author')        #this is a person
-    type_table = request.GET.get('type')
-    language_table = request.GET.get('language')
-    supervisor_table = request.GET.get('supervisor') #this is a person
-    coSupervisor_table = request.GET.get('cosupervisor') #this is a person
-    submitDateBegin_date = request.GET.get('beginning_date')
-    submitDateEnd_date = request.GET.get('ending_date') #*date format is  yyyy-mm-dd
-    numberOfPagesMin_int = request.GET.get('number_of_pages_min')
-    numberOfPagesMax_int = request.GET.get('number_of_pages_max')
-    uni_table = request.GET.get('unitable')
-    ins_table = request.GET.get('instable')
-
+    if request.method == 'GET':
+        form = SearchForm(request.GET)  
+        if form.is_valid():
+            name = form.cleaned_data['author']
     
-    print("pages",numberOfPagesMax_int)# this is where I test if the values are working or not
+   # this is where I test if the values are working or not
     
     
     context = {}
@@ -111,31 +98,21 @@ def search_view(request):
     #later on  I will stack if statements to filter the Thsesis.objects.all() by the selected table
     
     #show foreign key tables in the search page
-    university = University.objects.all().order_by('name')
-    institute = Institute.objects.all().order_by('name')
-    person = Person.objects.all().order_by('surname')
-    type = Type.objects.all().order_by('type_name')
-    language = Language.objects.all().order_by('language_name')
+    # university = University.objects.all().order_by('name')
+    # institute = Institute.objects.all().order_by('name')
+    # person = Person.objects.all().order_by('surname')
+    # type = Type.objects.all().order_by('type_name')
+    # language = Language.objects.all().order_by('language_name')
     
     
-    context['university'] = university
-    context['institute'] = institute
-    context['person'] = person
-    context['type'] = type
-    context['language'] = language
-
-    if len(str(thesisNo_string)) <= 7 and len(str(thesisNo_string))>0: #this way we can check if the thesis number is valid or not    
-        try:
-            thesisno = Thesis.objects.get(thesis_no=thesisNo_string) # burayı neden yaptığımı hatırlamıyorum şuanlık önemsiz
-        except Thesis.DoesNotExist:
-            thesisno = None
-            pass
-    else:
-        thesisno = None
-   
-    context['thesisno'] = thesisno
+    # context['university'] = university
+    # context['institute'] = institute
+    # context['person'] = person
+    # context['type'] = type
+    # context['language'] = language
+    
     context['results'] = None #results will be a list of Thesis objects but for now it is None
-    
+    context['form'] = form
 
 
     return render(request, 'search_results.html', context)

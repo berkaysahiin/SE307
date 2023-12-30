@@ -52,11 +52,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'thesis_project.urls'
-
+TEMPLPLATE_DIR = BASE_DIR / "thesis" / "templates"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLPLATE_DIR,
+                 TEMPLPLATE_DIR /"search"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

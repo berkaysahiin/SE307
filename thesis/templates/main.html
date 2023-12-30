@@ -7,10 +7,14 @@
 </head>
 {% include 'header.html'%}
 <body>
+    <div class="container">
     <h1>Main Page</h1>
-    
+    <h4> Click the item you want to see. </h4>
+
+    <div class="wrapper">
+    <div class="models">
     <h2>Models:</h2>
-    <ul>
+    <ul class="models-list">
         <li><a href="{% url 'thesis:institute-list' %}">Institute List</a></li>
         <li><a href="{% url 'thesis:language-list' %}">Language List</a></li>
         <li><a href="{% url 'thesis:person-list' %}">Person List</a></li>
@@ -21,9 +25,10 @@
         <li><a href="{% url 'thesis:type-list' %}">Type List</a></li>
         <li><a href="{% url 'thesis:university-list' %}">University List</a></li>
     </ul>
-
+    </div>
+    <div class="details">
     <h2>Details:</h2>
-    <ul>
+    <ul class="details-list">
         <li><a href="{% url 'thesis:institute-detail' pk=1 %}">Sample Institute Detail</a></li>
         <li><a href="{% url 'thesis:language-detail' pk=1 %}">Sample Language Detail</a></li>
         <li><a href="{% url 'thesis:person-detail' pk=1 %}">Sample Person Detail</a></li>
@@ -34,5 +39,8 @@
         <li><a href="{% url 'thesis:type-detail' pk=1 %}">Sample Type Detail</a></li>
         <li><a href="{% url 'thesis:university-detail' pk=1 %}">Sample University Detail</a></li>
     </ul>
+</div>
+</div>
+</div>
 </body>
 </html>

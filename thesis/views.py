@@ -108,7 +108,7 @@ def search_view(request):
             thesis = Thesis.objects.all()
             changed = False
 
-            thesis_copy = thesis #a is a copy of thesis
+            #thesis_copy = thesis #a is a copy of thesis
             if thesis_no != None and int(thesis_no) >= 1000000:
                 thesis = thesis.filter(thesis_no=thesis_no)
                 changed = True
@@ -154,8 +154,8 @@ def search_view(request):
             if number_of_pages_max != None and number_of_pages_min != None:
                 thesis = thesis.filter(number_of_pages__range=[number_of_pages_min, number_of_pages_max])
                 changed = True
-            if changed == False:
-                thesis = thesis_copy
+    if changed == False:
+        thesis = None
                                     
     results = thesis
     context['results'] = results #results will be a list of Thesis objects but for now it is None

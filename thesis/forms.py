@@ -4,18 +4,42 @@ from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type,
 from thesis import models
 
 class SearchForm(forms.Form):
+    widgets = {
+        'submission_beginning_date': forms.DateInput(attrs={'type': 'date'}),
+        'submission_ending_date': forms.DateInput(attrs={'type': 'date'}),
+    }
+    institute_list = Institute.objects.all().order_by("name")
+    a = {}
+    b = []
+    for institutes in institute_list:
+        if institutes.name not in a: 
+            a[institutes.name] = institutes.institute_id
+            b.append(institutes.institute_id)
+    del a 
+    institute_list = institute_list.filter(institute_id__in=b)
+    del b
+        
+        
+    
     thesisno = forms.IntegerField(initial=1000000,min_value=1000000,required=False)
     title = forms.CharField(required=False)
-    
     author = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
     superviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
     cosuperviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
     type = forms.ModelChoiceField(queryset=Type.objects.all().order_by("type_name"), required=False)
     language = forms.ModelChoiceField(queryset=Language.objects.all().order_by("language_name"), required=False)  # assuming you have a Language model
     university = forms.ModelChoiceField(queryset=University.objects.all().order_by("name"), required=False)#TODO fix institute appearing twice
-    institute = forms.ModelChoiceField(queryset=Institute.objects.all().order_by("name"), required=False) #TODO maybe connect institute to university 
-    submission_beginning_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd')
-    submission_ending_date = forms.DateField(required=False, initial='2010-12-23',help_text='Enter Date as yyyy-mm-dd',)
+    institute = forms.ModelChoiceField(institute_list, required=False)  
+    submission_beginning_date = forms.DateField(
+        required=False, 
+        initial='2010-12-23',
+        widget=forms.DateInput(attrs={'type': 'date'})  # use the custom widget here
+    )
+    submission_ending_date = forms.DateField(
+        required=False, 
+        initial='2010-12-23',
+        widget=forms.DateInput(attrs={'type': 'date'})  # use the custom widget here
+    )
     number_of_pages_min = forms.IntegerField(required=False)
     number_of_pages_max = forms.IntegerField(required=False)
     abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)

@@ -1,6 +1,7 @@
-# forms.py in your 'thesis' app
+import random
 from django import forms
 from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University, Institute, Language
+from thesis import models
 
 class SearchForm(forms.Form):
     thesisno = forms.IntegerField(initial=1000000,min_value=1000000,required=False)
@@ -26,17 +27,15 @@ class ThesisForm(forms.ModelForm):
 
     class Meta:
         model = Thesis
-        fields = '__all__'
+        exclude = ['thesis_no']
 
     def __init__(self, *args, **kwargs):
         super(ThesisForm, self).__init__(*args, **kwargs)
         
-        # Customize queryset for Author, Type, Cosuperviser, etc.
         self.fields['author'].queryset = Person.objects.all()
         self.fields['type'].queryset = Type.objects.all()
         self.fields['cosuperviser'].queryset = Person.objects.all()
 
-        # Set the queryset for the subjects field
         self.fields['subjects'].queryset = Subject.objects.all()
 
         if self.instance:
@@ -55,24 +54,30 @@ class ThesisForm(forms.ModelForm):
         
 
     def save(self, commit=True):
-        # Save the main Thesis model
+        if not self.instance.pk: 
+            self.instance.thesis_no = generate_unique_thesis_no()
+
         thesis = super().save(commit=commit)
 
-        # Save the related subjects
         subjects = self.cleaned_data.get('subjects', [])
         ThesisSubject.objects.filter(thesis_no=thesis).delete()
         for subject in subjects:
             ThesisSubject.objects.create(thesis_no=thesis, subject=subject)
 
-        # Save the keywords
         keywords = self.cleaned_data.get('keywords', '')
         keyword_list = [keyword.strip() for keyword in keywords.split(',')]
         
-        # Clear existing keywords for the thesis
         ThesisKeyword.objects.filter(thesis_no=thesis).delete()
 
-        # Add new keywords
         for keyword in keyword_list:
             ThesisKeyword.objects.create(thesis_no=thesis, keyword=keyword)
 
         return thesis
+
+
+def generate_unique_thesis_no():
+    while True:
+        new_thesis_no = random.randint(1, 1000)
+
+        if not Thesis.objects.filter(thesis_no=new_thesis_no).exists():
+            return new_thesis_no

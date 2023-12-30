@@ -1,12 +1,13 @@
 from django.views.generic import ListView, DetailView
-
 from thesis.forms import ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
 
+import time
 
 class InstituteListView(ListView):
     model = Institute
@@ -85,33 +86,79 @@ def main(request):
 
 
 def search_view(request):
+    context = {}
     if request.method == 'GET':
         form = SearchForm(request.GET)  
         if form.is_valid():
-            name = form.cleaned_data['author']
-    
-   # this is where I test if the values are working or not
-    
-    
-    context = {}
-    
-    #later on  I will stack if statements to filter the Thsesis.objects.all() by the selected table
-    
-    #show foreign key tables in the search page
-    # university = University.objects.all().order_by('name')
-    # institute = Institute.objects.all().order_by('name')
-    # person = Person.objects.all().order_by('surname')
-    # type = Type.objects.all().order_by('type_name')
-    # language = Language.objects.all().order_by('language_name')
-    
-    
-    # context['university'] = university
-    # context['institute'] = institute
-    # context['person'] = person
-    # context['type'] = type
-    # context['language'] = language
-    
-    context['results'] = None #results will be a list of Thesis objects but for now it is None
+            thesis_no = form.cleaned_data['thesisno']
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            superviser = form.cleaned_data['superviser']
+            cosuperviser = form.cleaned_data['cosuperviser']
+            type = form.cleaned_data['type']
+            language = form.cleaned_data['language']
+            university = form.cleaned_data['university']
+            institute = form.cleaned_data['institute']
+            beginning_date = form.cleaned_data['beginning_date']
+            ending_date = form.cleaned_data['ending_date']
+            number_of_pages_max = form.cleaned_data['number_of_pages_max']
+            number_of_pages_min = form.cleaned_data['number_of_pages_min']
+            
+            results = None
+            thesis = Thesis.objects.all()
+            changed = False
+
+            thesis_copy = thesis #a is a copy of thesis
+            if thesis_no != None and int(thesis_no) >= 1000000:
+                thesis = thesis.filter(thesis_no=thesis_no)
+                changed = True
+            if title != None:
+                thesis = thesis.filter(title__icontains=title)
+            if author != None:
+                thesis = thesis.filter(author=author)
+                changed = True
+            if superviser != None:
+                thesis = thesis.filter(superviser=superviser)
+                changed = True
+            if cosuperviser != None:
+                thesis = thesis.filter(cosuperviser=cosuperviser)
+                changed = True
+            if type != None:
+                thesis = thesis.filter(type=type)
+                changed = True
+            if language != None:
+                thesis = thesis.filter(language=language)
+                changed = True
+            if university != None:
+                if institute != None:
+                    thesis = thesis.filter(university=university, institute__name__contains=institute.name) #TODO maybe instead of this make user choose institute in the form
+                thesis = thesis.filter(university=university)
+                changed = True
+            if institute != None:
+                thesis = thesis.filter(institute__name__contains=institute.name)
+                changed = True
+                
+            def is_valid_date(date):
+                try:
+                    time.datetime.strptime(date, '%Y-%m-%d')
+                    return True
+                except ValueError:
+                    return False
+            #TODO fix date filtering it raises an error if the date is not a date
+            if beginning_date != None and ending_date != None:
+                if is_valid_date(beginning_date) and is_valid_date(ending_date):
+                    thesis = thesis.filter(submission_date__range=[beginning_date, ending_date])
+                    changed = True
+                else:
+                    pass
+            if number_of_pages_max != None and number_of_pages_min != None:
+                thesis = thesis.filter(number_of_pages__range=[number_of_pages_min, number_of_pages_max])
+                changed = True
+            if changed == False:
+                thesis = thesis_copy
+                                    
+    results = thesis
+    context['results'] = results #results will be a list of Thesis objects but for now it is None
     context['form'] = form
 
 

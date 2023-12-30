@@ -21,18 +21,18 @@
         {% for thesis in results %}
             <li>
                 <strong>Title:</strong> {{ thesis.title }}<br>
-                <strong>Author:</strong> {{ thesis.author }} {{ thesis.author.surname }}<br>
+                <strong>Author:</strong> {{ thesis.author }}<br>
                 <strong>Year:</strong> {{ thesis.year }}<br>
-                <strong>Type:</strong> {{ thesis.5 }}<br>
+                <strong>Type:</strong> {{ thesis.type }}<br>
                 <strong>University:</strong> {{ thesis.university }}<br>
                 <strong>Institute:</strong> {{ thesis.institute }}<br>
-                <strong>Number of Pages:</strong> {{ thesis.8 }}<br>
-                <strong>Language:</strong> {{ thesis.9 }}<br>
-                <strong>Supervisor:</strong> {{ thesis.10 }} {{ thesis.superviser.surname }}<br>
-                {% if thesis.11 %}
-                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.12}} {{ thesis.cosuperviser.surname }}<br>
+                <strong>Number of Pages:</strong> {{ thesis.number_of_pages }}<br>
+                <strong>Language:</strong> {{ thesis.language }}<br>
+                <strong>Supervisor:</strong> {{ thesis.superviser }} <br>
+                {% if thesis.cosuperviser %}
+                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.cosuperviser}}<br>
                 {% endif %}
-                <strong>Submission Date:</strong> {{ thesis.13 }}
+                <strong>Submission Date:</strong> {{ thesis.submission_date }}
             </li>
         {% endfor %}
     </ul>

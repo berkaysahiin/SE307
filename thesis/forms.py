@@ -133,7 +133,7 @@ class PersonForm(forms.ModelForm):
 # --- UNIVERSITY ---
 
 class UniversityForm(forms.ModelForm):
-    institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=False)
+    institutes = forms.CharField(max_length=255, required=False, help_text='Enter institutes separated by commas.')
 
     class Meta:
         model = University
@@ -143,7 +143,11 @@ class UniversityForm(forms.ModelForm):
         super(UniversityForm, self).__init__(*args, **kwargs)
 
         if self.instance:
-            initial_institutes = Institute.objects.filter(university=self.instance)
+            initial_institutes = Institute.objects.filter(university=self.instance).values_list('name', flat=True)
+            initial_institutes = ', '.join(
+                Institute.objects.filter(university=self.instance).values_list('name', flat=True)
+            )
+
             self.fields['institutes'].initial = initial_institutes
 
 
@@ -153,22 +157,20 @@ class UniversityForm(forms.ModelForm):
 
         uni = super().save(commit=commit)
 
-        # Get the selected institutes from the form
-        selected_institutes = self.cleaned_data.get('institutes', [])
+        institutes = self.cleaned_data.get('institutes', '')
+        institute_list = [institute.strip() for institute in institutes.split(',')]
+        
+        Institute.objects.filter(university=uni).delete()
 
-        # Create Institute objects for each selected institute
-        for institute in selected_institutes:
-            Institute.objects.create(
-                institute_id=generate_unique_institute_id(),
-                name=institute.name,  # Assuming Institute has a 'name' field
-                university=uni
-            )
+        for inst in institute_list:
+            Institute.objects.create(university=uni, name=inst, institute_id=generate_unique_institute_id())
 
         return uni
 
 # --- INSTITUTE ---
 
 class InstituteForm(forms.ModelForm):
+
     class Meta:
         model = University
         fields = ['name']

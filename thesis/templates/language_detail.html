@@ -8,6 +8,6 @@
 <body>
     <h1>Language Detail</h1>
     <p>Name: {{ object.language_name }}</p>
-    <!-- Add more details as needed -->
 </body>
+    <a href="{% url 'thesis:language_update' pk=object.language_id %}">Edit Language</a>
 </html>

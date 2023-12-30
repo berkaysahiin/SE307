@@ -200,6 +200,23 @@ class SubjectForm(forms.ModelForm):
         subject = super().save(commit=commit)
         return subject
 
+# --- LANGUAGE ---
+
+class LanguageForm(forms.ModelForm):
+    class Meta:
+        model = Language
+        fields = ['language_name']
+
+    def __init__(self, *args, **kwargs):
+        super(LanguageForm, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        if not self.instance.language_id:
+            self.instance.language_id = generate_unique_language_id()
+        
+        lang = super().save(commit=commit)
+        return lang
+
 # --- UTILITIES ---
 
 def generate_unique_thesis_no():
@@ -235,4 +252,11 @@ def generate_unique_subject_id():
         new_id = random.randint(1,10000)
 
         if not Subject.objects.filter(subject_id=new_id).exists():
+            return new_id
+        
+def generate_unique_language_id():
+    while True:
+        new_id = random.randint(1,10000)
+
+        if not Language.objects.filter(language_id=new_id).exists():
             return new_id

@@ -87,6 +87,7 @@ def main(request):
 
 def search_view(request):
     context = {}
+    changed = False
     if request.method == 'GET':
         form = SearchForm(request.GET)  
         if form.is_valid():
@@ -106,7 +107,6 @@ def search_view(request):
             
             results = None
             thesis = Thesis.objects.all()
-            changed = False
 
             #thesis_copy = thesis #a is a copy of thesis
             if thesis_no != None and int(thesis_no) >= 1000000:
@@ -138,22 +138,21 @@ def search_view(request):
                 thesis = thesis.filter(institute__name__contains=institute.name)
                 changed = True
                 
-            def is_valid_date(date):
-                try:
-                    time.datetime.strptime(date, '%Y-%m-%d')
-                    return True
-                except ValueError:
-                    return False
-            #TODO fix date filtering it raises an error if the date is not a date
-            if beginning_date != None and ending_date != None:
-                if is_valid_date(beginning_date) and is_valid_date(ending_date):
-                    thesis = thesis.filter(submission_date__range=[beginning_date, ending_date])
-                    changed = True
-                else:
-                    pass
-            if number_of_pages_max != None and number_of_pages_min != None:
-                thesis = thesis.filter(number_of_pages__range=[number_of_pages_min, number_of_pages_max])
+            if beginning_date != None:
+                thesis = thesis.filter(submission_date__gte=beginning_date)
                 changed = True
+            if ending_date != None:
+                thesis = thesis.filter(submission_date__lte=ending_date)
+                changed = True
+            if number_of_pages_max != None:
+                thesis = thesis.filter(number_of_pages__lte=number_of_pages_max)
+                changed = True
+            if number_of_pages_min != None:
+                thesis = thesis.filter(number_of_pages__gte=number_of_pages_min)
+                changed = True 
+                
+        
+            
     if changed == False:
         thesis = None
                                     

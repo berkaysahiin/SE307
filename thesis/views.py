@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from thesis.forms import CreateInstituteForm, CreateUniversityForm, PersonForm, ThesisForm, SearchForm
+from thesis.forms import InstituteForm, UniversityForm, PersonForm, ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
@@ -199,11 +199,11 @@ class PersonUpdateView(CreateView):
 class UniversityCreateView(CreateView):
     model = University
     template_name =  'university_form.html'
-    form_class = CreateUniversityForm
+    form_class = UniversityForm
     success_url = 'http://127.0.0.1:8000/university'
 
 class InstituteCreateView(CreateView):
     model = Institute
     template_name =  'institute_form.html'
-    form_class = CreateInstituteForm
+    form_class = InstituteForm
     success_url = 'http://127.0.0.1:8000/institute'

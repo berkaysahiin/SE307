@@ -113,6 +113,9 @@ class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
         exclude = ['person_id']
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type':'date'})
+        }
 
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
@@ -132,7 +135,9 @@ class PersonForm(forms.ModelForm):
         return person
 
 
-class CreateUniversityForm(forms.ModelForm):
+class UniversityForm(forms.ModelForm):
+    institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=False)
+
     class Meta:
         model = University
         fields = ['name', 'establishment_year']
@@ -140,9 +145,22 @@ class CreateUniversityForm(forms.ModelForm):
     def save(self, commit=True):
         self.instance.university_id = generate_unique_university_id()
         uni = super().save(commit=commit)
+
+        # Get the selected institutes from the form
+        selected_institutes = self.cleaned_data.get('institutes', [])
+
+        # Create Institute objects for each selected institute
+        for institute in selected_institutes:
+            Institute.objects.create(
+                institute_id=generate_unique_institute_id(),
+                name=institute.name,  # Assuming Institute has a 'name' field
+                university=uni
+            )
+
         return uni
 
-class CreateInstituteForm(forms.ModelForm):
+
+class InstituteForm(forms.ModelForm):
     class Meta:
         model = University
         fields = ['name']
@@ -179,5 +197,5 @@ def generate_unique_institute_id():
     while True:
         new_id = random.randint(1,10000)
 
-        if not Institute.objects.filter(Institute_id=new_id).exists():
+        if not Institute.objects.filter(institute_id=new_id).exists():
             return new_id

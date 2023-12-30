@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import InstituteCreateView, PersonCreateView, PersonUpdateView, UniversityCreateView, main, search_view, ThesisCreateView, ThesisUpdateView
+from .views import InstituteCreateView, PersonCreateView, PersonUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
 
 app_name = 'thesis'
 
@@ -41,5 +41,7 @@ urlpatterns = [
     path('person/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
 
     path('university/add', UniversityCreateView.as_view(), name='university_create'),
+    path('university/<int:pk>/edit', UniversityUpdateView.as_view(), name='university_update'),
+
     path('institute/add', InstituteCreateView.as_view(), name='institute_create')
 ]

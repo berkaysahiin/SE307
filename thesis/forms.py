@@ -109,6 +109,8 @@ class ThesisForm(forms.ModelForm):
 
         return thesis
 
+# --- PERSON ---
+
 class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
@@ -120,20 +122,15 @@ class PersonForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PersonForm, self).__init__(*args, **kwargs)
 
-
-        if self.instance:
-            print("---------------INSTANCE-*---------------------")
-            print(self.instance.person_id)
-
-
     def save(self, commit=True):
-        if not self.instance.pk: 
+        if not self.instance.person_id: 
             self.instance.person_id = generate_unique_person_id()
 
         person = super().save(commit=commit)
 
         return person
 
+# --- UNIVERSITY ---
 
 class UniversityForm(forms.ModelForm):
     institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=False)
@@ -142,8 +139,18 @@ class UniversityForm(forms.ModelForm):
         model = University
         fields = ['name', 'establishment_year']
 
+    def __init__(self, *args, **kwargs):
+        super(UniversityForm, self).__init__(*args, **kwargs)
+
+        if self.instance:
+            initial_institutes = Institute.objects.filter(university=self.instance)
+            self.fields['institutes'].initial = initial_institutes
+
+
     def save(self, commit=True):
-        self.instance.university_id = generate_unique_university_id()
+        if not self.instance.university_id:
+            self.instance.university_id = generate_unique_university_id()
+
         uni = super().save(commit=commit)
 
         # Get the selected institutes from the form
@@ -159,6 +166,7 @@ class UniversityForm(forms.ModelForm):
 
         return uni
 
+# --- INSTITUTE ---
 
 class InstituteForm(forms.ModelForm):
     class Meta:
@@ -166,7 +174,9 @@ class InstituteForm(forms.ModelForm):
         fields = ['name']
 
     def save(self, commit=True):
-        self.instance.institute_id = generate_unique_institute_id()
+        if not self.instance.institute_id:
+            self.instance.institute_id = generate_unique_institute_id()
+
         inst = super().save(commit=commit)
         return inst
 

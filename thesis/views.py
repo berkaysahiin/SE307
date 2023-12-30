@@ -172,6 +172,8 @@ def search_view(request):
 
     return render(request, 'search_results.html', context)
  
+# --- THESIS ---
+
 class ThesisCreateView(CreateView):
     model = Thesis
     template_name = 'thesis_form.html'
@@ -184,23 +186,37 @@ class ThesisUpdateView(UpdateView):
     form_class = ThesisForm
     success_url = 'http://127.0.0.1:8000/thesis/' 
 
+# --- PERSON ---
+
 class PersonCreateView(CreateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
     success_url = 'http://127.0.0.1:8000/person' 
 
-class PersonUpdateView(CreateView):
+class PersonUpdateView(UpdateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
     success_url = 'http://127.0.0.1:8000/person' 
+
+
+# --- UNIVERSITY --- 
 
 class UniversityCreateView(CreateView):
     model = University
     template_name =  'university_form.html'
     form_class = UniversityForm
     success_url = 'http://127.0.0.1:8000/university'
+
+class UniversityUpdateView(UpdateView):
+    model = University
+    template_name =  'university_form.html'
+    form_class = UniversityForm
+    success_url = 'http://127.0.0.1:8000/university'
+
+
+# --- INSTITUTE --- 
 
 class InstituteCreateView(CreateView):
     model = Institute

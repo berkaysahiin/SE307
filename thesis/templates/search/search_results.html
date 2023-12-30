@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+{% include 'header.html' %}
+<body>
+    <h1>Search Results</h1>
+    <h3>
+        Leave fields blank to ignore them in the search.
+    </h3>
+    <form method="get" action="{% url 'thesis:search' %}">
+        {{ form.as_p }}
+        <input type="submit" value="submit">
+    </form>
+  
+
+    {% if results %}
+    <h2>Results:</h2>
+    <ul>
+        {% for thesis in results %}
+            <li>
+                <strong>Title:</strong> {{ thesis.title }}<br>
+                <strong>Author:</strong> {{ thesis.author }}<br>
+                <strong>Year:</strong> {{ thesis.year }}<br>
+                <strong>Type:</strong> {{ thesis.type }}<br>
+                <strong>University:</strong> {{ thesis.university }}<br>
+                <strong>Institute:</strong> {{ thesis.institute }}<br>
+                <strong>Number of Pages:</strong> {{ thesis.number_of_pages }}<br>
+                <strong>Language:</strong> {{ thesis.language }}<br>
+                <strong>Supervisor:</strong> {{ thesis.superviser }} <br>
+                {% if thesis.cosuperviser %}
+                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.cosuperviser}}<br>
+                {% endif %}
+                <strong>Submission Date:</strong> {{ thesis.submission_date }}
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+</body>
+</html>
+
+

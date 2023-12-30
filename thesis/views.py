@@ -1,12 +1,13 @@
 from django.views.generic import ListView, DetailView
-
-from thesis.forms import ThesisForm
+from thesis.forms import ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
 from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
 
+import time
 
 class InstituteListView(ListView):
     model = Institute
@@ -85,57 +86,80 @@ def main(request):
 
 
 def search_view(request):
-# each of this values can be None
-#TODO clean this mess by dividing variables into groups by types
-    thesisNo_string = request.GET.get('thesisno')
-    title_string = request.GET.get('title')
-    abstract_string = request.GET.get('abstract')
-    author_table = request.GET.get('author')        #this is a person
-    type_table = request.GET.get('type')
-    language_table = request.GET.get('language')
-    supervisor_table = request.GET.get('supervisor') #this is a person
-    coSupervisor_table = request.GET.get('cosupervisor') #this is a person
-    submitDateBegin_date = request.GET.get('beginning_date')
-    submitDateEnd_date = request.GET.get('ending_date') #*date format is  yyyy-mm-dd
-    numberOfPagesMin_int = request.GET.get('number_of_pages_min')
-    numberOfPagesMax_int = request.GET.get('number_of_pages_max')
-    uni_table = request.GET.get('unitable')
-    ins_table = request.GET.get('instable')
-
-    
-    print("pages",numberOfPagesMax_int)# this is where I test if the values are working or not
-    
-    
     context = {}
-    
-    #later on  I will stack if statements to filter the Thsesis.objects.all() by the selected table
-    
-    #show foreign key tables in the search page
-    university = University.objects.all().order_by('name')
-    institute = Institute.objects.all().order_by('name')
-    person = Person.objects.all().order_by('surname')
-    type = Type.objects.all().order_by('type_name')
-    language = Language.objects.all().order_by('language_name')
-    
-    
-    context['university'] = university
-    context['institute'] = institute
-    context['person'] = person
-    context['type'] = type
-    context['language'] = language
+    if request.method == 'GET':
+        form = SearchForm(request.GET)  
+        if form.is_valid():
+            thesis_no = form.cleaned_data['thesisno']
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+            superviser = form.cleaned_data['superviser']
+            cosuperviser = form.cleaned_data['cosuperviser']
+            type = form.cleaned_data['type']
+            language = form.cleaned_data['language']
+            university = form.cleaned_data['university']
+            institute = form.cleaned_data['institute']
+            beginning_date = form.cleaned_data['beginning_date']
+            ending_date = form.cleaned_data['ending_date']
+            number_of_pages_max = form.cleaned_data['number_of_pages_max']
+            number_of_pages_min = form.cleaned_data['number_of_pages_min']
+            
+            results = None
+            thesis = Thesis.objects.all()
+            changed = False
 
-    if len(str(thesisNo_string)) <= 7 and len(str(thesisNo_string))>0: #this way we can check if the thesis number is valid or not    
-        try:
-            thesisno = Thesis.objects.get(thesis_no=thesisNo_string) # burayı neden yaptığımı hatırlamıyorum şuanlık önemsiz
-        except Thesis.DoesNotExist:
-            thesisno = None
-            pass
-    else:
-        thesisno = None
-   
-    context['thesisno'] = thesisno
-    context['results'] = None #results will be a list of Thesis objects but for now it is None
-    
+            #thesis_copy = thesis #a is a copy of thesis
+            if thesis_no != None and int(thesis_no) >= 1000000:
+                thesis = thesis.filter(thesis_no=thesis_no)
+                changed = True
+            if title != None:
+                thesis = thesis.filter(title__icontains=title)
+            if author != None:
+                thesis = thesis.filter(author=author)
+                changed = True
+            if superviser != None:
+                thesis = thesis.filter(superviser=superviser)
+                changed = True
+            if cosuperviser != None:
+                thesis = thesis.filter(cosuperviser=cosuperviser)
+                changed = True
+            if type != None:
+                thesis = thesis.filter(type=type)
+                changed = True
+            if language != None:
+                thesis = thesis.filter(language=language)
+                changed = True
+            if university != None:
+                if institute != None:
+                    thesis = thesis.filter(university=university, institute__name__contains=institute.name) #TODO maybe instead of this make user choose institute in the form
+                thesis = thesis.filter(university=university)
+                changed = True
+            if institute != None:
+                thesis = thesis.filter(institute__name__contains=institute.name)
+                changed = True
+                
+            def is_valid_date(date):
+                try:
+                    time.datetime.strptime(date, '%Y-%m-%d')
+                    return True
+                except ValueError:
+                    return False
+            #TODO fix date filtering it raises an error if the date is not a date
+            if beginning_date != None and ending_date != None:
+                if is_valid_date(beginning_date) and is_valid_date(ending_date):
+                    thesis = thesis.filter(submission_date__range=[beginning_date, ending_date])
+                    changed = True
+                else:
+                    pass
+            if number_of_pages_max != None and number_of_pages_min != None:
+                thesis = thesis.filter(number_of_pages__range=[number_of_pages_min, number_of_pages_max])
+                changed = True
+    if changed == False:
+        thesis = None
+                                    
+    results = thesis
+    context['results'] = results #results will be a list of Thesis objects but for now it is None
+    context['form'] = form
 
 
     return render(request, 'search_results.html', context)

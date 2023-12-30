@@ -1,7 +1,7 @@
 {% include "header.html"%}
 
 {% block content %}
-  <h2>{% if form.instance.pk %}Edit Thesis{% else %}Add Thesis{% endif %}</h2>
+  <h2>{% if form.instance.pk %}Edit Person{% else %}Add Person{% endif %}</h2>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}

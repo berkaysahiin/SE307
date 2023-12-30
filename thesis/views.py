@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from thesis.forms import ThesisForm, SearchForm
+from thesis.forms import CreateInstituteForm, CreateUniversityForm, PersonForm, ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
@@ -172,18 +172,38 @@ def search_view(request):
 
     return render(request, 'search_results.html', context)
  
-
-
 class ThesisCreateView(CreateView):
     model = Thesis
     template_name = 'thesis_form.html'
     form_class = ThesisForm
-    success_url = reverse_lazy(ThesisListView)
-
+    success_url = 'http://127.0.0.1:8000/thesis/' 
 
 class ThesisUpdateView(UpdateView):
     model = Thesis
-    form_class = ThesisForm
     template_name = 'thesis_form.html'
-    success_url = reverse_lazy('thesis')
+    form_class = ThesisForm
+    success_url = 'http://127.0.0.1:8000/thesis/' 
 
+class PersonCreateView(CreateView):
+    model = Person
+    template_name = 'person_form.html'
+    form_class = PersonForm
+    success_url = 'http://127.0.0.1:8000/person' 
+
+class PersonUpdateView(CreateView):
+    model = Person
+    template_name = 'person_form.html'
+    form_class = PersonForm
+    success_url = 'http://127.0.0.1:8000/person' 
+
+class UniversityCreateView(CreateView):
+    model = University
+    template_name =  'university_form.html'
+    form_class = CreateUniversityForm
+    success_url = 'http://127.0.0.1:8000/university'
+
+class InstituteCreateView(CreateView):
+    model = Institute
+    template_name =  'institute_form.html'
+    form_class = CreateInstituteForm
+    success_url = 'http://127.0.0.1:8000/institute'

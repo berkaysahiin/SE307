@@ -10,5 +10,6 @@
             <li><a href="{% url 'thesis:person-detail' pk=person.pk %}">{{ person.name }} {{ person.surname }}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'thesis:person_add' %}">Add Person</a>
 </body>
 </html>

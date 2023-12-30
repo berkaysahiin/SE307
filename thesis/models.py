@@ -129,6 +129,10 @@ class University(models.Model):
     name = models.CharField(db_column='NAME', max_length=255, db_collation='Turkish_CI_AS')  # Field name made lowercase.
     establishment_year = models.SmallIntegerField(db_column='ESTABLISHMENT_YEAR')  # Field name made lowercase.
 
+    @property
+    def institutes(self):
+        return Institute.objects.filter(university_id=self.university_id)
+
     class Meta:
         managed = False
         db_table = 'UNIVERSITY'

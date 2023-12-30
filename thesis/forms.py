@@ -30,6 +30,10 @@ class ThesisForm(forms.ModelForm):
                 ThesisKeyword.objects.filter(thesis_no=self.instance).values_list('keyword', flat=True)
             )
             self.fields['keywords'].initial = initial_keywords
+
+            initial_subjects = ThesisSubject.objects.filter(thesis_no=self.instance).values_list('subject', flat=True)
+            self.fields['subjects'].initial = initial_subjects
+
             print(self.fields['keywords'].initial)
         else:
             print('self.instance does not exist') 

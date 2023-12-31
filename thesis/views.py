@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.views.generic import ListView, DetailView
-from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm
+from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm, LoginForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
@@ -8,7 +8,6 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 
-import time
 
 class InstituteListView(ListView):
     model = Institute
@@ -85,6 +84,12 @@ class UniversityDetailView(DetailView):
 def main(request):
     return render(request, 'main.html')
 
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    context = {}
+    context['form'] = form
+    return render(request, 'login.html', context)
+
 
 def search_view(request):
     context = {}
@@ -111,11 +116,12 @@ def search_view(request):
             results = None
             thesis = Thesis.objects.all()
 
-            if thesis_no != None and int(thesis_no) >= 1000000:
+            if thesis_no != None and int(thesis_no) < 1000000:
                 thesis = thesis.filter(thesis_no=thesis_no) 
                 changed = True
             if title != None:
                 thesis = thesis.filter(title__icontains=title)
+                changed = True
             if author != None:
                 thesis = thesis.filter(author=author)
                 changed = True

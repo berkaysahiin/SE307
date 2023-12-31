@@ -59,7 +59,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [TEMPLPLATE_DIR,
-                 TEMPLPLATE_DIR /"search"],
+                 TEMPLPLATE_DIR /"search",
+                 TEMPLPLATE_DIR /"register"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

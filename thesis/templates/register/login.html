@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>Login Page</title>
+</head>
+{% include 'header.html' %}
+<body>
+    <h1>Login Page</h1>
+    <h3>Enter user name and password to login</h3>
+    <form action="post" action="{% url 'thesis:login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+    <input type="submit" value="Login">
+</body>
+</html>

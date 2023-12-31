@@ -1,11 +1,12 @@
 from django.urls import path
-from .views import InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
+from .views import login_view, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
 from thesis import views
 
 app_name = 'thesis'
 
 urlpatterns = [
     path('', main, name='main'),
+    path('login/', login_view, name='login'),
     path('institute/', views.InstituteListView.as_view(), name='institute-list'),
     path('institute/<int:pk>/', views.InstituteDetailView.as_view(), name='institute-detail'),
 

@@ -5,7 +5,8 @@ from thesis import views
 app_name = 'thesis'
 
 urlpatterns = [
-    path('', main, name='main'),
+    path('', search_view, name='search'),
+    path('main/', main, name='main'),
     path('login/', login_view, name='login'),
     path('institute/', views.InstituteListView.as_view(), name='institute-list'),
     path('institute/<int:pk>/', views.InstituteDetailView.as_view(), name='institute-detail'),

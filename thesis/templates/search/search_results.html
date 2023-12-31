@@ -25,7 +25,10 @@
     <ul>
         {% for thesis in results %}
             <li>
-                <strong>Thesis No:</strong> {{ thesis.thesis_no}}<br>
+                <a href="{% url 'thesis:thesis-detail' thesis.thesis_no %}">  <!-- Add this line -->
+                    <strong>Thesis No:</strong> {{ thesis.thesis_no}}<br>
+                    <!-- ... rest of the fields ... -->
+                </a>
                 <strong>Title:</strong> {{ thesis.title }}<br>
                 <strong>Author:</strong> {{ thesis.author }}<br>
                 <strong>Year:</strong> {{ thesis.year }}<br>

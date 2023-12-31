@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login_view, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
+from .views import ErrorPageView, LanguageDeleteView, PersonDeleteView, SubjectDeleteView, ThesisDeleteView, UniversityDeleteView, login_view, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
 from thesis import views
 
 app_name = 'thesis'
@@ -38,18 +38,25 @@ urlpatterns = [
 
     path('thesis/add/', ThesisCreateView.as_view(), name='thesis_add'),
     path('thesis/<int:pk>/edit/', ThesisUpdateView.as_view(), name='thesis_edit'),
+    path('thesis/<int:pk>/delete/', ThesisDeleteView.as_view(), name='thesis_delete'),
 
     path('person/add', PersonCreateView.as_view(), name='person_add'),
     path('person/<int:pk>/edit/', PersonUpdateView.as_view(), name='person_edit'),
+    path('person/<int:pk>/delete/', PersonDeleteView.as_view(), name='person_delete'),
 
     path('university/add', UniversityCreateView.as_view(), name='university_create'),
     path('university/<int:pk>/edit', UniversityUpdateView.as_view(), name='university_update'),
+    path('university/<int:pk>/delete', UniversityDeleteView.as_view(), name='university_delete'),
 
     path('institute/add', InstituteCreateView.as_view(), name='institute_create'),
 
     path('subject/add', SubjectCreateView.as_view(), name='subject_create'),
     path('subject/<int:pk>/edit', SubjectUpdateView.as_view(), name='subject_update'),
+    path('subject/<int:pk>/delete', SubjectDeleteView.as_view(), name='subject_delete'),
 
     path('language/add', LanguageCreateView.as_view(), name='language_create'),
     path('language/<int:pk>/edit', LanguageUpdateView.as_view(), name='language_update'),
+    path('language/<int:pk>/delete', LanguageDeleteView.as_view(), name='language_delete'),
+
+    path('error_page/', ErrorPageView.as_view(), name='error_page'),
 ]

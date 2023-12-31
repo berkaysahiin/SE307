@@ -13,4 +13,5 @@
     <p>Birth Date: {{ object.birth_date }}</p>
 </body>
     <a href="{% url 'thesis:person_edit' pk=object.person_id %}">Edit Person</a>
+    <a href="{% url 'thesis:person_delete' pk=object.person_id %}">Delete Person</a>
 </html>

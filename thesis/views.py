@@ -1,12 +1,13 @@
+from django.db.models.deletion import ProtectedError
 from django.db.models import Q
 from django.views.generic import ListView, DetailView
 from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm, LoginForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
-from django.shortcuts import render
-from django.db import connection
-from django.views.generic.edit import CreateView, UpdateView
-from django.urls import reverse_lazy
-from django.core.exceptions import ValidationError
+from django.shortcuts import redirect, render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.http import HttpResponseRedirect, HttpResponseServerError
+from django.views.generic import TemplateView
+
 
 
 class InstituteListView(ListView):
@@ -198,6 +199,11 @@ class ThesisUpdateView(UpdateView):
     form_class = ThesisForm
     success_url = 'http://127.0.0.1:8000/thesis/' 
 
+class ThesisDeleteView(DeleteView):
+    model = Thesis
+    template_name = 'delete_confirm.html'
+    success_url = 'http://127.0.0.1:8000/thesis/' 
+
 # --- PERSON ---
 
 class PersonCreateView(CreateView):
@@ -212,6 +218,10 @@ class PersonUpdateView(UpdateView):
     form_class = PersonForm
     success_url = 'http://127.0.0.1:8000/person' 
 
+class PersonDeleteView(DeleteView):
+    model = Person
+    template_name = 'delete_confirm.html'
+    success_url = 'http://127.0.0.1:8000/person' 
 
 # --- UNIVERSITY --- 
 
@@ -227,6 +237,10 @@ class UniversityUpdateView(UpdateView):
     form_class = UniversityForm
     success_url = 'http://127.0.0.1:8000/university'
 
+class UniversityDeleteView(DeleteView):
+    model = University
+    template_name = 'delete_confirm.html'
+    success_url = 'http://127.0.0.1:8000/university/' 
 
 # --- INSTITUTE --- 
 
@@ -250,6 +264,10 @@ class SubjectUpdateView(UpdateView):
     form_class = SubjectForm
     success_url = 'http://127.0.0.1:8000/subject'
 
+class SubjectDeleteView(DeleteView):
+    model = Subject
+    template_name = 'delete_confirm.html'
+    success_url = 'http://127.0.0.1:8000/subject/' 
 
 # --- Language ---
 
@@ -265,3 +283,18 @@ class LanguageUpdateView(UpdateView):
     template_name =  'language_form.html'
     form_class = LanguageForm
     success_url = 'http://127.0.0.1:8000/language'
+
+class LanguageDeleteView(DeleteView):
+    model = Language
+    template_name = 'delete_confirm.html'
+    success_url = 'http://127.0.0.1:8000/language/' 
+
+# --- ERROR ---
+
+class ErrorPageView(TemplateView):
+    template_name = 'error_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['error_message'] = "An error occurred."
+        return context 

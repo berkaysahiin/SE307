@@ -1,17 +1,9 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
 
 class Institute(models.Model):
     institute_id = models.IntegerField(db_column='INSTITUTE_ID', primary_key=True)  # Field name made lowercase.
     name = models.CharField(db_column='NAME', max_length=255, db_collation='Turkish_CI_AS')  # Field name made lowercase.
-    university = models.ForeignKey('University', models.DO_NOTHING, db_column='UNIVERSITY_ID')  # Field name made lowercase.
+    university = models.ForeignKey('University', on_delete=models.CASCADE, db_column='UNIVERSITY_ID')
 
     class Meta:
         managed = False
@@ -63,15 +55,15 @@ class Thesis(models.Model):
     thesis_no = models.DecimalField(db_column='THESIS_NO', primary_key=True, max_digits=7, decimal_places=0)  # Field name made lowercase.
     title = models.CharField(db_column='TITLE', max_length=500, db_collation='Turkish_CI_AS')  # Field name made lowercase.
     abstract = models.CharField(db_column='ABSTRACT', max_length=4000, db_collation='Turkish_CI_AS')  # Field name made lowercase.
-    author = models.ForeignKey(Person, models.DO_NOTHING, db_column='AUTHOR_ID')  # Field name made lowercase.
+    author = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='AUTHOR_ID')  # Field name made lowercase.
     year = models.SmallIntegerField(db_column='YEAR')  # Field name made lowercase.
-    type = models.ForeignKey('Type', models.DO_NOTHING, db_column='TYPE_ID')  # Field name made lowercase.
-    university = models.ForeignKey('University', models.DO_NOTHING, db_column='UNIVERSITY_ID')  # Field name made lowercase.
-    institute = models.ForeignKey(Institute, models.DO_NOTHING, db_column='INSTITUTE_ID')  # Field name made lowercase.
+    type = models.ForeignKey('Type', models.PROTECT, db_column='TYPE_ID')  # Field name made lowercase.
+    university = models.ForeignKey('University', models.PROTECT, db_column='UNIVERSITY_ID')  # Field name made lowercase.
+    institute = models.ForeignKey(Institute, on_delete=models.PROTECT, db_column='INSTITUTE_ID')  # Field name made lowercase.
     number_of_pages = models.IntegerField(db_column='NUMBER_OF_PAGES')  # Field name made lowercase.
-    language = models.ForeignKey(Language, models.DO_NOTHING, db_column='LANGUAGE_ID')  # Field name made lowercase.
-    superviser = models.ForeignKey(Person, models.DO_NOTHING, db_column='SUPERVISER', related_name='thesis_superviser_set')  # Field name made lowercase.
-    cosuperviser = models.ForeignKey(Person, models.DO_NOTHING, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
+    language = models.ForeignKey(Language, on_delete=models.PROTECT, db_column='LANGUAGE_ID')  # Field name made lowercase.
+    superviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='SUPERVISER', related_name='thesis_superviser_set')  # Field name made lowercase.
+    cosuperviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
     submission_date = models.DateField(db_column='SUBMISSION_DATE')  # Field name made lowercase.
 
     @property
@@ -90,7 +82,7 @@ class Thesis(models.Model):
 
 
 class ThesisKeyword(models.Model):
-    thesis_no = models.OneToOneField(Thesis, models.DO_NOTHING, db_column='THESIS_NO', primary_key=True)  # Field name made lowercase. The composite primary key (THESIS_NO, KEYWORD) found, that is not supported. The first column is selected.
+    thesis_no = models.OneToOneField(Thesis, on_delete=models.CASCADE, db_column='THESIS_NO', primary_key=True)
     keyword = models.CharField(db_column='KEYWORD', max_length=255, db_collation='Turkish_CI_AS')  # Field name made lowercase.
 
     class Meta:
@@ -103,8 +95,9 @@ class ThesisKeyword(models.Model):
 
 
 class ThesisSubject(models.Model):
-    thesis_no = models.OneToOneField(Thesis, models.DO_NOTHING, db_column='THESIS_NO', primary_key=True)  # Field name made lowercase. The composite primary key (THESIS_NO, SUBJECT_ID) found, that is not supported. The first column is selected.
-    subject = models.ForeignKey(Subject, models.DO_NOTHING, db_column='SUBJECT_ID')  # Field name made lowercase.
+    thesis_no = models.OneToOneField(Thesis, on_delete=models.CASCADE, db_column='THESIS_NO', primary_key=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, db_column='SUBJECT_ID')
+
 
     class Meta:
         managed = False

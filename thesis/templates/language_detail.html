@@ -10,4 +10,5 @@
     <p>Name: {{ object.language_name }}</p>
 </body>
     <a href="{% url 'thesis:language_update' pk=object.language_id %}">Edit Language</a>
+    <a href="{% url 'thesis:language_delete' pk=object.language_id %}">Delete Language</a>
 </html>

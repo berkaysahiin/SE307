@@ -1,3 +1,58 @@
-body {
-    background-color: wheat; 
+body {background-color:antiquewhite }
+
+h1{ 
+   
+    color:black  /* Text color for contrast */
+    
+ }
+
+ul{
+    line-height:2;
+    margin: 30px;   
+}
+
+
+/* details and models separated each part*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+}
+
+.models {
+    width: 48%; /
+}
+
+
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .models {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+/* Resetting link styles */
+.models-list a {
+    color: inherit; /* Use the default text color */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Style links when hovered */
+.models-list a:hover {
+    color: #FFA500; /* Change color on hover */
 }

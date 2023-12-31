@@ -1,8 +1,65 @@
-head {
-    background-color: wheat;
+
+
+body {background-color:antiquewhite }
+
+h1{ color:#FFA500 }
+
+ul{
+    line-height:2;
+    margin: 300px;   
 }
 
 
-body {
-    background-color: wheat; 
+/* details and models separated each part*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color:#FFA500
 }
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+}
+
+.models,
+.details {
+    width: 48%; /
+}
+
+.models-list,
+.details-list {
+    list-style: none;
+    padding: 0;
+}
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .models,
+    .details {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+
+
+/* Resetting link styles */
+.models-list a,
+.details-list a {
+    color: inherit; /* Use the default text color */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Style links when hovered */
+.models-list a:hover,
+.details-list a:hover {
+    color: #FFA500; /* Change color on hover */
+}
+

@@ -119,7 +119,7 @@ def search_view(request):
             if thesis_no != None and int(thesis_no) < 1000000:
                 thesis = thesis.filter(thesis_no=thesis_no) 
                 changed = True
-            if title != None:
+            if title != None and title != '':
                 thesis = thesis.filter(title__icontains=title)
                 changed = True
             if author != None:
@@ -166,7 +166,7 @@ def search_view(request):
                     elif years_choice == 'after_this_date':
                         thesis = thesis.filter(year__gte=year)
                     changed = True
-            if keywords:
+            if keywords != None and keywords != '':
                 keywords = keywords.split(',')
                 q_objects = Q()
                 for keyword in keywords:

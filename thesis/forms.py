@@ -19,8 +19,6 @@ class SearchForm(forms.Form):
     del a 
     institute_list = institute_list.filter(institute_id__in=b)
     del b
-        
-        
     
     thesisno = forms.IntegerField(initial=1000000,min_value=1000000,required=False)
     title = forms.CharField(required=False)
@@ -43,7 +41,6 @@ class SearchForm(forms.Form):
     )
     number_of_pages_min = forms.IntegerField(required=False)
     number_of_pages_max = forms.IntegerField(required=False)
-    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)
     YEARS_CHOICES = [
         ("at_this_date", 'at this date'),
         ("before_this_date", 'before this date'),
@@ -52,6 +49,8 @@ class SearchForm(forms.Form):
 
     years_choice = forms.ChoiceField(choices=YEARS_CHOICES, required=False, widget=forms.Select)
     year = forms.IntegerField(required=False)
+    keywords = forms.CharField(max_length=255, required=False, help_text='Enter keywords separated by commas.')
+    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)
 
 
 class ThesisForm(forms.ModelForm):

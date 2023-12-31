@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.views.generic import ListView, DetailView
 from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
@@ -106,13 +107,12 @@ def search_view(request):
             number_of_pages_min = form.cleaned_data['number_of_pages_min']
             years_choice = form.cleaned_data['years_choice']
             year = form.cleaned_data['year']
-            
+            keywords = form.cleaned_data['keywords']
             results = None
             thesis = Thesis.objects.all()
 
-            #thesis_copy = thesis #a is a copy of thesis
             if thesis_no != None and int(thesis_no) >= 1000000:
-                thesis = thesis.filter(thesis_no=thesis_no)
+                thesis = thesis.filter(thesis_no=thesis_no) 
                 changed = True
             if title != None:
                 thesis = thesis.filter(title__icontains=title)
@@ -139,7 +139,6 @@ def search_view(request):
             if institute != None:
                 thesis = thesis.filter(institute__name__contains=institute.name)
                 changed = True
-                
             if submission_beginning_date != None:
                 thesis = thesis.filter(submission_date__gte=submission_beginning_date)
                 changed = True
@@ -161,6 +160,13 @@ def search_view(request):
                     elif years_choice == 'after_this_date':
                         thesis = thesis.filter(year__gte=year)
                     changed = True
+            if keywords:
+                keywords = keywords.split(',')
+                q_objects = Q()
+                for keyword in keywords:
+                    q_objects |= Q(thesiskeyword__keyword__icontains=keyword)
+                thesis = thesis.filter(q_objects).distinct()
+                changed = True
                                     
     if changed == False:
         thesis = None

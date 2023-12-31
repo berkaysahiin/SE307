@@ -36,7 +36,12 @@
                 {% if thesis.cosuperviser %}
                     <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.cosuperviser}}<br>
                 {% endif %}
-                <strong>Submission Date:</strong> {{ thesis.submission_date }}
+                <strong>Submission Date:</strong> {{ thesis.submission_date }}<br>
+                <strong>Abstract:</strong> {{ thesis.abstract }}<br>
+                <strong>Keywords:</strong>
+                {% for keyword in thesis.keywords.all %}
+                    {{ keyword }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
             </li>
         {% endfor %}
     </ul>

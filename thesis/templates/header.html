@@ -1,7 +1,7 @@
 <!-- BEGIN: /c:/Users/Omer/OneDrive/Masaüstü/databse-proje/SE307/thesis/templates/header.html -->
 
 <header>
-    <div style="background-color: #faebd7;">
+    <div style="background-color: #faebd7; color: #29242a;">
         <div style="display: flex; align-items: center; background-color: #fcd2a6; padding-left: 25px;">
             <h3 style="margin-right: 10px;">Thesis app</a></h3>
             <nav style="padding: 10px;">
@@ -9,9 +9,14 @@
                     <li style="margin-right: 10px;"><a href="{% url 'thesis:main' %}">Home</a></li>
                     <li style="margin-right: 10px;"><a href="{% url 'thesis:search' %}">Search</a></li>
                     <li style="margin-right: 10px;"><a href="{%url 'thesis:thesis_add'}">Add</a></li>
-                    <li style="margin-right: 10px;"><a href="/signup">sign_up</a></li>
-                    <li style="margin-right: 10px;"><a href="/login">login</a></li>
-                    <li style="margin-right: 10px;"><a href="/logout">logout</a></li>
+                    {%if user.is_authenticated%}
+                    <li style="margin-right: 10px;"><a href="/logout">Logout</a></li>
+                    <li style="margin-left: 10px;font-weight: bold;">Logged in as {{user.username}}</li>
+                    {%else%}
+                        <li style="margin-right: 10px;"><a href="/signup">Signup</a></li>
+                        <li style="margin-right: 10px;"><a href="/login">Login</a></li>
+                    {%endif%}
+                    
                     <!-- add edit page to links maybe -->
                 </ul>
             </nav>

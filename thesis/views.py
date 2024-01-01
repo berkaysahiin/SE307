@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django.views.generic import ListView, DetailView
-from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm, LoginForm
+from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm, LoginForm, RegistrationForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import render
 from django.db import connection
@@ -89,6 +89,17 @@ def login_view(request):
     context = {}
     context['form'] = form
     return render(request, 'login.html', context)
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        user = form.save()
+    else:
+        form = RegistrationForm()
+    
+    context = {}
+    context['form'] = form
+    return render(request, 'signup.html', context)
 
 
 def search_view(request):

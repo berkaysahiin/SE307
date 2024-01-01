@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>Signup</title>
+    <title>Login Page</title>
 </head>
 {% include 'header.html' %}
 <body>
-    <h1>Signup Page</h1>
+    <h1>Login Page</h1>
     <h3>Enter user name and password to login</h3>
-    <form action="post" action="{% url 'thesis:signup' %}">
+    <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
+        <input type="submit" value="Login">
     </form>
-    <input type="submit" value="Signup">
+    <p>Don't have an account create one here! <br>
+        <a href="{% url 'thesis:sign_up' %}">Signup</a>
+    </p>
+    
 </body>
 </html>

@@ -2,13 +2,16 @@
 
 <header>
     <div style="background-color: #faebd7;">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; background-color: #fcd2a6; padding-left: 25px;">
             <h3 style="margin-right: 10px;">Thesis app</a></h3>
-            <nav style="background-color: #aeaeae; padding: 10px;">
+            <nav style="padding: 10px;">
                 <ul style="list-style-type: none; margin: 0; padding: 0; display: flex;">
                     <li style="margin-right: 10px;"><a href="{% url 'thesis:main' %}">Home</a></li>
-                    <li><a href="{% url 'thesis:search' %}">Search</a></li>
-                    <li><a href="{%url 'thesis:thesis_add'}"></a></li>
+                    <li style="margin-right: 10px;"><a href="{% url 'thesis:search' %}">Search</a></li>
+                    <li style="margin-right: 10px;"><a href="{%url 'thesis:thesis_add'}">Add</a></li>
+                    <li style="margin-right: 10px;"><a href="/signup">sign_up</a></li>
+                    <li style="margin-right: 10px;"><a href="/login">login</a></li>
+                    <li style="margin-right: 10px;"><a href="/logout">logout</a></li>
                     <!-- add edit page to links maybe -->
                 </ul>
             </nav>

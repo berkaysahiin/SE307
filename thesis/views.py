@@ -1,12 +1,13 @@
 from django.db.models.deletion import ProtectedError
 from django.db.models import Q
 from django.views.generic import ListView, DetailView
-from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm, LoginForm, RegistrationForm
+from thesis.forms import InstituteForm, LanguageForm, SubjectForm, UniversityForm, PersonForm, ThesisForm, SearchForm,  RegistrationForm
 from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
 from django.shortcuts import redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.views.generic import TemplateView
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -85,22 +86,28 @@ class UniversityDetailView(DetailView):
 def main(request):
     return render(request, 'main.html')
 
-def login_view(request):
-    form = LoginForm(request.POST or None)
-    context = {}
-    context['form'] = form
-    return render(request, 'login.html', context)
+# def login_view(request):
+#     form = LoginForm(request.POST or None)
+#     context = {}
+#     context['form'] = form
+#     return render(request, 'login.html', context)
 
-def signup_view(request):
+def sign_up(request):
+    print("view")
     if request.method == 'POST':
+        print("post")
         form = RegistrationForm(request.POST)
-        user = form.save()
+        if form.is_valid():
+            print("valid")
+            user = form.save()
+            login(request, user)
+            return redirect('/search')
     else:
+        print("get")
         form = RegistrationForm()
-    
-    context = {}
-    context['form'] = form
-    return render(request, 'signup.html', context)
+        context = {}
+        context['form'] = form
+        return render(request, 'sign_up.html', context)
 
 
 def search_view(request):

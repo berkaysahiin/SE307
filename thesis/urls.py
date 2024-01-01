@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ErrorPageView, LanguageDeleteView, PersonDeleteView, SubjectDeleteView, ThesisDeleteView, UniversityDeleteView, login_view, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
+from .views import ErrorPageView, LanguageDeleteView, PersonDeleteView, SubjectDeleteView, ThesisDeleteView, UniversityDeleteView, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
 from thesis import views
 
 app_name = 'thesis'
@@ -7,8 +7,8 @@ app_name = 'thesis'
 urlpatterns = [
     path('', search_view, name='search'),
     path('main/', main, name='main'),
-    path('login/', login_view, name='login'),
-    path('signup/', views.signup_view, name='signup'),
+    # path('login/', login_view, name='login'),
+    path('signup/', views.sign_up, name='sign_up'),
     path('institute/', views.InstituteListView.as_view(), name='institute-list'),
     path('institute/<int:pk>/', views.InstituteDetailView.as_view(), name='institute-detail'),
 

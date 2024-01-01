@@ -1,36 +1,48 @@
 
 
-body {background-color:antiquewhite }
+body {background: linear-gradient(to bottom, antiquewhite 40%, floralwhite); /* Apply gradient background */
+    min-height: 100vh; /* Ensure gradient covers the entire height of the viewport */
+    margin: 0; /* Reset default margin */ }
 
-h1{ color:#FFA500 }
+h1{  text-align: left; /* Center-align the text */
+    font-family: "Arial", sans-serif; /* Choose a suitable font */
+    font-size: 2.5em; /* Adjust font size */
+    color: #333; /* Text color for contrast */
+    margin: 50px 0; /* Add space around the header */
+    text-shadow: 1px 1px 2px #ccc; /* Add a subtle shadow */
+    margin: 30px;   }
+h3 {
+    font-family: "Arial", sans-serif; 
+    font-size: 1em; 
+    color: #333; 
+    margin: 30px 0; 
+    text-shadow: 1px 1px 2px #ccc; 
+    margin: 30px;
+}
+ul{ line-height:2;
+    margin: 30px; }
 
-ul{
-    line-height:2;
-    margin: 300px;   
+.search-container {
+    font-family: "Arial", sans-serif; 
+    font-size: 1em; 
+    color: #333;  
+    text-shadow: 1px 1px 2px #ccc; 
+
+
 }
 
 
-/* details and models separated each part*/
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+
+
+
+.models {
+    font-size: 1.1em; 
+    margin: 30px;
+    width: 48%; /
     
 }
 
-.wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start; 
-}
-
-.models,
-.details {
-    width: 48%; /
-}
-
-.models-list,
-.details-list {
+.models-list {
     list-style: none;
     padding: 0;
 }
@@ -41,8 +53,7 @@ ul{
         flex-direction: column;
     }
 
-    .models,
-    .details {
+    .models {
         width: 100%;
         margin-bottom: 20px;
     }
@@ -63,3 +74,15 @@ ul{
     color: #FFA500; /* Change color on hover */
 }
 
+
+
+/* Style for the form container */
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-container p {
+    flex: 0 0 30%; /* Three columns, adjust as needed */
+    margin: 10px; /* Add space between fields */
+}

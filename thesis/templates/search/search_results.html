@@ -11,17 +11,18 @@
 {% include 'header.html' %}
 <body>
     <h1>Search Results</h1>
-    <h3>
-        Leave fields blank to ignore them in the search.
-    </h3>
-    <form method="get" action="{% url 'thesis:search' %}">
+    <h3> Leave fields blank to ignore them in the search.  </h3>
+    <form method="get" action="{% url 'thesis:search' %}" class="search-form">
+        <div class="form-container">      
         {{ form.as_p }}
+      </div>
         <input type="submit" value="submit">
     </form>
   
 
     {% if results %}
     <h2>Results:</h2>
+    <div class="search-container"> 
     <ul>
         {% for thesis in results %}
             <li>
@@ -50,6 +51,7 @@
             </li>
         {% endfor %}
     </ul>
+  </div>
 
 {% endif %}
 </body>

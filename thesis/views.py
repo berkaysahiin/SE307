@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect, HttpResponseServerError
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class InstituteListView(ListView):
@@ -205,64 +205,64 @@ def search_view(request):
  
 # --- THESIS ---
 
-class ThesisCreateView(CreateView):
+class ThesisCreateView(LoginRequiredMixin,CreateView):
     model = Thesis
     template_name = 'thesis_form.html'
     form_class = ThesisForm
     success_url = 'http://127.0.0.1:8000/thesis/' 
 
-class ThesisUpdateView(UpdateView):
+class ThesisUpdateView(LoginRequiredMixin,UpdateView):
     model = Thesis
     template_name = 'thesis_form.html'
     form_class = ThesisForm
     success_url = 'http://127.0.0.1:8000/thesis/' 
 
-class ThesisDeleteView(DeleteView):
+class ThesisDeleteView(LoginRequiredMixin,DeleteView):
     model = Thesis
     template_name = 'delete_confirm.html'
     success_url = 'http://127.0.0.1:8000/thesis/' 
 
 # --- PERSON ---
 
-class PersonCreateView(CreateView):
+class PersonCreateView(LoginRequiredMixin,CreateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
     success_url = 'http://127.0.0.1:8000/person' 
 
-class PersonUpdateView(UpdateView):
+class PersonUpdateView(LoginRequiredMixin,UpdateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
     success_url = 'http://127.0.0.1:8000/person' 
 
-class PersonDeleteView(DeleteView):
+class PersonDeleteView(LoginRequiredMixin,DeleteView):
     model = Person
     template_name = 'delete_confirm.html'
     success_url = 'http://127.0.0.1:8000/person' 
 
 # --- UNIVERSITY --- 
 
-class UniversityCreateView(CreateView):
+class UniversityCreateView(LoginRequiredMixin,CreateView):
     model = University
     template_name =  'university_form.html'
     form_class = UniversityForm
     success_url = 'http://127.0.0.1:8000/university'
 
-class UniversityUpdateView(UpdateView):
+class UniversityUpdateView(LoginRequiredMixin,UpdateView):
     model = University
     template_name =  'university_form.html'
     form_class = UniversityForm
     success_url = 'http://127.0.0.1:8000/university'
 
-class UniversityDeleteView(DeleteView):
+class UniversityDeleteView(LoginRequiredMixin,DeleteView):
     model = University
     template_name = 'delete_confirm.html'
     success_url = 'http://127.0.0.1:8000/university/' 
 
 # --- INSTITUTE --- 
 
-class InstituteCreateView(CreateView):
+class InstituteCreateView(LoginRequiredMixin,CreateView):
     model = Institute
     template_name =  'institute_form.html'
     form_class = InstituteForm
@@ -270,39 +270,39 @@ class InstituteCreateView(CreateView):
 
 # --- SUBJECT ---
     
-class SubjectCreateView(CreateView):
+class SubjectCreateView(LoginRequiredMixin,CreateView):
     model = Subject
     template_name =  'subject_form.html'
     form_class = SubjectForm
     success_url = 'http://127.0.0.1:8000/subject'
 
-class SubjectUpdateView(UpdateView):
+class SubjectUpdateView(LoginRequiredMixin,UpdateView):
     model = Subject
     template_name =  'subject_form.html'
     form_class = SubjectForm
     success_url = 'http://127.0.0.1:8000/subject'
 
-class SubjectDeleteView(DeleteView):
+class SubjectDeleteView(LoginRequiredMixin,DeleteView):
     model = Subject
     template_name = 'delete_confirm.html'
     success_url = 'http://127.0.0.1:8000/subject/' 
 
 # --- Language ---
 
-class LanguageCreateView(CreateView):
+class LanguageCreateView(LoginRequiredMixin,CreateView):
     model = Language
     template_name =  'language_form.html'
     form_class = LanguageForm
     success_url = 'http://127.0.0.1:8000/language'
 
 
-class LanguageUpdateView(UpdateView):
+class LanguageUpdateView(LoginRequiredMixin,UpdateView):
     model = Language
     template_name =  'language_form.html'
     form_class = LanguageForm
     success_url = 'http://127.0.0.1:8000/language'
 
-class LanguageDeleteView(DeleteView):
+class LanguageDeleteView(LoginRequiredMixin,DeleteView):
     model = Language
     template_name = 'delete_confirm.html'
     success_url = 'http://127.0.0.1:8000/language/' 

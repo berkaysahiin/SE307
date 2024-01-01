@@ -209,18 +209,18 @@ class ThesisCreateView(LoginRequiredMixin,CreateView):
     model = Thesis
     template_name = 'thesis_form.html'
     form_class = ThesisForm
-    success_url = 'http://127.0.0.1:8000/thesis/' 
+    success_url = '/thesis' 
 
 class ThesisUpdateView(LoginRequiredMixin,UpdateView):
     model = Thesis
     template_name = 'thesis_form.html'
     form_class = ThesisForm
-    success_url = 'http://127.0.0.1:8000/thesis/' 
+    success_url = '/thesis' 
 
 class ThesisDeleteView(LoginRequiredMixin,DeleteView):
     model = Thesis
     template_name = 'delete_confirm.html'
-    success_url = 'http://127.0.0.1:8000/thesis/' 
+    success_url = '/thesis' 
 
 # --- PERSON ---
 
@@ -228,18 +228,18 @@ class PersonCreateView(LoginRequiredMixin,CreateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
-    success_url = 'http://127.0.0.1:8000/person' 
+    success_url = '/person' 
 
 class PersonUpdateView(LoginRequiredMixin,UpdateView):
     model = Person
     template_name = 'person_form.html'
     form_class = PersonForm
-    success_url = 'http://127.0.0.1:8000/person' 
+    success_url = '/person' 
 
 class PersonDeleteView(LoginRequiredMixin,DeleteView):
     model = Person
     template_name = 'delete_confirm.html'
-    success_url = 'http://127.0.0.1:8000/person' 
+    success_url = '/person' 
 
 # --- UNIVERSITY --- 
 
@@ -247,18 +247,18 @@ class UniversityCreateView(LoginRequiredMixin,CreateView):
     model = University
     template_name =  'university_form.html'
     form_class = UniversityForm
-    success_url = 'http://127.0.0.1:8000/university'
+    success_url = '/university'
 
 class UniversityUpdateView(LoginRequiredMixin,UpdateView):
     model = University
     template_name =  'university_form.html'
     form_class = UniversityForm
-    success_url = 'http://127.0.0.1:8000/university'
+    success_url = '/university'
 
 class UniversityDeleteView(LoginRequiredMixin,DeleteView):
     model = University
     template_name = 'delete_confirm.html'
-    success_url = 'http://127.0.0.1:8000/university/' 
+    success_url = '/university/' 
 
 # --- INSTITUTE --- 
 
@@ -266,7 +266,7 @@ class InstituteCreateView(LoginRequiredMixin,CreateView):
     model = Institute
     template_name =  'institute_form.html'
     form_class = InstituteForm
-    success_url = 'http://127.0.0.1:8000/institute'
+    success_url = '/institute'
 
 # --- SUBJECT ---
     
@@ -274,18 +274,18 @@ class SubjectCreateView(LoginRequiredMixin,CreateView):
     model = Subject
     template_name =  'subject_form.html'
     form_class = SubjectForm
-    success_url = 'http://127.0.0.1:8000/subject'
+    success_url = '/subject'
 
 class SubjectUpdateView(LoginRequiredMixin,UpdateView):
     model = Subject
     template_name =  'subject_form.html'
     form_class = SubjectForm
-    success_url = 'http://127.0.0.1:8000/subject'
+    success_url = '/subject'
 
 class SubjectDeleteView(LoginRequiredMixin,DeleteView):
     model = Subject
     template_name = 'delete_confirm.html'
-    success_url = 'http://127.0.0.1:8000/subject/' 
+    success_url = '/subject/' 
 
 # --- Language ---
 
@@ -293,19 +293,19 @@ class LanguageCreateView(LoginRequiredMixin,CreateView):
     model = Language
     template_name =  'language_form.html'
     form_class = LanguageForm
-    success_url = 'http://127.0.0.1:8000/language'
+    success_url = '/language'
 
 
 class LanguageUpdateView(LoginRequiredMixin,UpdateView):
     model = Language
     template_name =  'language_form.html'
     form_class = LanguageForm
-    success_url = 'http://127.0.0.1:8000/language'
+    success_url = '/language'
 
 class LanguageDeleteView(LoginRequiredMixin,DeleteView):
     model = Language
     template_name = 'delete_confirm.html'
-    success_url = 'http://127.0.0.1:8000/language/' 
+    success_url = '/language/' 
 
 # --- ERROR ---
 

@@ -37,9 +37,9 @@ class SearchForm(forms.Form):
     superviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
     cosuperviser = forms.ModelChoiceField(queryset=Person.objects.all().order_by("surname"), required=False)
     type = forms.ModelChoiceField(queryset=Type.objects.all().order_by("type_name"), required=False)
+    number_of_pages_min = forms.IntegerField(required=False)
+    number_of_pages_max = forms.IntegerField(required=False)
     language = forms.ModelChoiceField(queryset=Language.objects.all().order_by("language_name"), required=False)  # assuming you have a Language model
-    university = forms.ModelChoiceField(queryset=University.objects.all().order_by("name"), required=False)#TODO fix institute appearing twice
-    institute = forms.ModelChoiceField(institute_list, required=False)  
     submission_beginning_date = forms.DateField(
         required=False, 
         initial='2010-12-23',
@@ -50,18 +50,18 @@ class SearchForm(forms.Form):
         initial='2010-12-23',
         widget=forms.DateInput(attrs={'type': 'date'})  # use the custom widget here
     )
-    number_of_pages_min = forms.IntegerField(required=False)
-    number_of_pages_max = forms.IntegerField(required=False)
+    university = forms.ModelChoiceField(queryset=University.objects.all().order_by("name"), required=False)#TODO fix institute appearing twice
     YEARS_CHOICES = [
         ("at_this_date", 'at this date'),
         ("before_this_date", 'before this date'),
         ("after_this_date", 'after this date')
     ]
+    institute = forms.ModelChoiceField(institute_list, required=False)  
 
     years_choice = forms.ChoiceField(choices=YEARS_CHOICES, required=False, widget=forms.Select)
     year = forms.IntegerField(required=False)
     keywords = forms.CharField(max_length=255, required=False, help_text='Enter keywords separated by commas.')
-    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':75}),required=False)
+    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':60}),required=False)
 
 
 class ThesisForm(forms.ModelForm):

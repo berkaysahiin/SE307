@@ -1,13 +1,54 @@
 body {
-    background: linear-gradient(to bottom, antiquewhite 40%, floralwhite); /* Apply gradient background */
-    min-height: 100vh; /* Ensure gradient covers the entire height of the viewport */
-    margin: 0; /* Reset default margin */
-  }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-  title {  text-align: left; /* Center-align the text */
-    font-family: "Arial", sans-serif; /* Choose a suitable font */
-    font-size: 2.5em; /* Adjust font size */
-    color: #333; /* Text color for contrast */
-    margin: 50px 0; /* Add space around the header */
-    text-shadow: 1px 1px 2px #ccc; /* Add a subtle shadow */
-    margin: 30px;   }
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+nav {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    color: #333;
+}
+
+a:hover {
+    background-color: #ddd;
+}
+
+.add-btn {
+    display: block;
+    margin: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+}
+
+.add-btn:hover {
+    background-color: #555;
+}

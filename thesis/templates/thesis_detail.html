@@ -1,14 +1,51 @@
 {% include "header.html"%}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Thesis Information</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Thesis Information</h1>
 <ul>
     <li><strong>Thesis Number:</strong> {{ object.thesis_no }}</li>
     <li><strong>Title:</strong> {{ object.title }}</li>
@@ -21,7 +58,7 @@
     <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
     <li><strong>Language:</strong> {{ object.language }}</li>
     <li><strong>Supervisor:</strong> {{ object.superviser }}</li>
-    <li><strong>Cosuperviser:</strong> 
+    <li><strong>Cosuperviser:</strong>
         {% if object.cosuperviser %}
             {{ object.cosuperviser|join:", " }}
         {% else %}
@@ -29,14 +66,14 @@
         {% endif %}
     </li>
     <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>
-    <li><strong>Keywords:</strong> 
+    <li><strong>Keywords:</strong>
         {% if object.keywords %}
             {{ object.keywords|join:", " }}
         {% else %}
             No keywords available.
         {% endif %}
     </li>
-    <li><strong>Subjects:</strong> 
+    <li><strong>Subjects:</strong>
         {% if object.subjects %}
             {{ object.subjects|join:", " }}
         {% else %}

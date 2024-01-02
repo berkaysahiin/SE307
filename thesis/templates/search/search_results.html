@@ -1,160 +1,60 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Search Results</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
+    
 
-        header {
-            background-color: #3498db;
-            color: #fff;
-            padding: 15px 0;
-            text-align: center;
-        }
-
-        h1, h2, h3 {
-            color: #333;
-        }
-
-        .search-form {
-            max-width: 600px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container {
-            margin-bottom: 20px;
-        }
-
-        input[type="submit"] {
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #2980b9;
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #3498db;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Additional Styles for Improved Placement */
-        .hidden-results {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .visible-results {
-            display: block;
-            opacity: 1;
-        }
-    </style>
 </head>
-
+{% include 'header.html' %}
 <body>
-    {% include 'header.html' %}
-    <div class="search-results-container hidden-results">
-        <h2>Results:</h2>
-        <div class="search-container"> 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Thesis No</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Year</th>
-                        <th>Type</th>
-                        <th>University</th>
-                        <th>Institute</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for thesis in results %}
-                        <tr>
-                            <td><a href="{% url 'thesis:thesis-detail' thesis.thesis_no %}" style="padding-right: 10px;">{{ thesis.thesis_no }}</a></td>
-                            <td style="padding-right: 10px;">{{ thesis.title }}</td>
-                            <td style="padding-right: 10px;">{{ thesis.author }}</td>
-                            <td style="padding-right: 10px;">{{ thesis.year }}</td>
-                            <td style="padding-right: 10px;">{{ thesis.type }}</td>
-                            <td style="padding-right: 10px;">{{ thesis.university }}</td>
-                            <td>{{ thesis.institute }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
     <h1>Search Results</h1>
-    <h3>Leave fields blank to ignore them in the search.</h3>
+    <h3> Leave fields blank to ignore them in the search.  </h3>
     <form method="get" action="{% url 'thesis:search' %}" class="search-form">
         <div class="form-container">      
-            {{ form.as_p }}
-        </div>
-        <input type="submit" value="Submit">
+        {{ form.as_p }}
+      </div>
+        <input type="submit" value="submit">
     </form>
+  
 
     {% if results %}
-        <script>
-            // Add a script to delay the appearance of search results
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(function() {
-                    document.querySelector('.search-results-container').classList.add('visible-results');
-                }, 500); // Adjust the delay as needed
-            });
-        </script>
-    {% endif %}
+    <h2>Results:</h2>
+    <div class="search-container"> 
+    <ul>
+        {% for thesis in results %}
+            <li>
+                <a href="{% url 'thesis:thesis-detail' thesis.thesis_no %}">  <!-- Add this line -->
+                    <strong>Thesis No:</strong> {{ thesis.thesis_no}}<br>
+                    <!-- ... rest of the fields ... -->
+                </a>
+                <strong>Title:</strong> {{ thesis.title }}<br>
+                <strong>Author:</strong> {{ thesis.author }}<br>
+                <strong>Year:</strong> {{ thesis.year }}<br>
+                <strong>Type:</strong> {{ thesis.type }}<br>
+                <strong>University:</strong> {{ thesis.university }}<br>
+                <strong>Institute:</strong> {{ thesis.institute }}<br>
+                <strong>Number of Pages:</strong> {{ thesis.number_of_pages }}<br>
+                <strong>Language:</strong> {{ thesis.language }}<br>
+                <strong>Supervisor:</strong> {{ thesis.superviser }} <br>
+                {% if thesis.cosuperviser %}
+                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.cosuperviser}}<br>
+                {% endif %}
+                <strong>Submission Date:</strong> {{ thesis.submission_date }}<br>
+                <strong>Abstract:</strong> {{ thesis.abstract }}<br>
+                <strong>Keywords:</strong>
+                {% for keyword in thesis.keywords.all %}
+                    {{ keyword }}{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+  </div>
+
+{% endif %}
 </body>
 </html>
+
+

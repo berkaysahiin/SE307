@@ -5,9 +5,12 @@
 <html>
 <head>
     <title>Person List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
 </head>
 <body>
     <h1>Person List</h1>
+    <h3> Click the item you want see details about </h3>
     <ul>
         {% for person in object_list %}
             <li><a href="{% url 'thesis:person-detail' pk=person.pk %}">{{ person.name }} {{ person.surname }}</a></li>

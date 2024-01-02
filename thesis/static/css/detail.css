@@ -1,0 +1,30 @@
+body {
+    background: linear-gradient(to bottom, antiquewhite 40%, floralwhite); /* Apply gradient background */
+    min-height: 100vh; /* Ensure gradient covers the entire height of the viewport */
+    margin: 0; /* Reset default margin */
+  }
+
+ h1 {  text-align: left; /* Center-align the text */
+    font-family: "Arial", sans-serif; /* Choose a suitable font */
+    font-size: 2.5em; /* Adjust font size */
+    color: #333; /* Text color for contrast */
+    margin: 50px 0; /* Add space around the header */
+    text-shadow: 1px 1px 2px #ccc; /* Add a subtle shadow */
+    margin: 30px;   }
+
+h3 {
+    font-family: "Arial", sans-serif; 
+    font-size: 1em; 
+    color: #333; 
+    margin: 30px 0; 
+    text-shadow: 1px 1px 2px #ccc; 
+    margin: 30px;
+    }
+
+ul{ line-height:2;
+    margin: 30px; }
+
+p {
+    margin: 30px;
+    font-size: 1.2em; 
+}

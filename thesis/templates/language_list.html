@@ -4,9 +4,12 @@
 <html>
 <head>
     <title>Language List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
 </head>
 <body>
     <h1>Language List</h1>
+    <h3> Click the item you want see details about </h3>
     <ul>
         {% for language in object_list %}
             <li><a href="{% url 'thesis:language-detail' pk=language.pk %}">{{ language.language_name }}</a></li>

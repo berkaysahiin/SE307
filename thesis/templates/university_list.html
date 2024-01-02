@@ -4,9 +4,12 @@
 <html>
 <head>
     <title>University List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
 </head>
 <body>
     <h1>University List</h1>
+    <h3> Click the item you want see details about </h3>
     <ul>
         {% for university in object_list %}
             <li><a href="{% url 'thesis:university-detail' pk=university.pk %}">{{ university.name }}</a></li>

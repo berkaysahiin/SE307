@@ -1,16 +1,3 @@
-{% include "header.html"%}
-
-{% block content %}
-  <h2>{% if form.instance.pk %}Edit Subject{% else %}Add Subject{% endif %}</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-{% endblock %}
-
-
-<style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f8f8;
@@ -63,4 +50,3 @@
   button:hover {
     background-color: #45a049;
   }
-</style>

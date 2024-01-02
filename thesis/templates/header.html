@@ -1,26 +1,89 @@
-<!-- BEGIN: /c:/Users/Omer/OneDrive/Masaüstü/databse-proje/SE307/thesis/templates/header.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
 
-<header>
-    <div style="background-color: #faebd7; color: #29242a;">
-        <div style="display: flex; align-items: center; background-color: #fcd2a6; padding-left: 25px;">
-            <h3 style="margin-right: 10px;">Thesis app</a></h3>
-            <nav style="padding: 10px;">
-                <ul style="list-style-type: none; margin: 0; padding: 0; display: flex;">
-                    <li style="margin-right: 10px;"><a href="{% url 'thesis:main' %}">Home</a></li>
-                    <li style="margin-right: 10px;"><a href="{% url 'thesis:search' %}">Search</a></li>
-                    <li style="margin-right: 10px;"><a href="{%url 'thesis:thesis_add'}">Add</a></li>
-                    {%if user.is_authenticated%}
-                    <li style="margin-right: 10px;"><a href="/logout">Logout</a></li>
-                    <li style="margin-left: 10px;font-weight: bold;">Logged in as {{user.username}}</li>
-                    {%else%}
-                        <li style="margin-right: 10px;"><a href="/signup">Signup</a></li>
-                        <li style="margin-right: 10px;"><a href="/login">Login</a></li>
-                    {%endif%}
-                    
-                    <!-- add edit page to links maybe -->
+        header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ecf0f1;
+        }
+
+        .logged-in {
+            margin-left: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+    </style>
+    <title>Thesis App</title>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h3>Thesis App</h3>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'thesis:main' %}">Home</a></li>
+                    <li><a href="{% url 'thesis:search' %}">Search</a></li>
+                    <li><a href="{% url 'thesis:thesis_add' %}">Add</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="/logout">Logout</a></li>
+                        <li class="logged-in">Logged in as {{ user.username }}</li>
+                    {% else %}
+                        <li><a href="/signup">Signup</a></li>
+                        <li><a href="/login">Login</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
-    </div>
-</header>
-<!-- END: /c:/Users/Omer/OneDrive/Masaüstü/databse-proje/SE307/thesis/templates/header.html -->
+    </header>
+</body>
+</html>

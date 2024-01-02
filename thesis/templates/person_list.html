@@ -10,12 +10,12 @@
 </head>
 <body>
     <h1>Person List</h1>
-    <h3> Click the item you want see details about </h3>
+    <h3> Click the item you want to see details about </h3>
     <ul>
         {% for person in object_list %}
             <li><a href="{% url 'thesis:person-detail' pk=person.pk %}">{{ person.name }} {{ person.surname }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{% url 'thesis:person_add' %}">Add Person</a>
+    <a href="{% url 'thesis:person_add' %}" class="add-btn">Add Person</a>
 </body>
 </html>

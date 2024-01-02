@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1>Type List</h1>
-    <h3> Click the item you want see details about </h3>
+    <h3> Click the item you want to see details about </h3>
     <ul>
         {% for type in object_list %}
             <li><a href="{% url 'thesis:type-detail' pk=type.pk %}">{{ type.type_name }}</a></li>

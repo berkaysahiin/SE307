@@ -9,12 +9,12 @@
 </head>
 <body>
     <h1>Language List</h1>
-    <h3> Click the item you want see details about </h3>
+    <h3> Click the item you want to see details about </h3>
     <ul>
         {% for language in object_list %}
             <li><a href="{% url 'thesis:language-detail' pk=language.pk %}">{{ language.language_name }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{% url 'thesis:language_create' %}">Add Language</a>
+    <a href="{% url 'thesis:language_create' %}" class="add-btn">Add Language</a>
 </body>
 </html>

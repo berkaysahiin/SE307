@@ -22,16 +22,34 @@ h3 {
     }
 
 ul{ line-height:2;
-    margin: 30px; }
+    margin: 30px;
+    list-style: none; }
 
-   /*     form {
-            max-width: 900px; 
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #faebd7; color: #29242a;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          }
+ul li a {
+    color: black; /* Set the default link color to black */
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s; /* Add a transition effect for color change */
+    }
+    
+ul li a:hover {
+    color: #FFA500; /* Change the link color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    cursor: pointer; /* Change cursor on hover */
+    }
 
-*/
+    .add-btn {
+        display: inline-block; /* Make the button inline */
+        padding: 10px 20px; /* Add padding for the button */
+        background-color: #4caf50; /* Set button background color to green */
+        color: #fff; /* Set button text color to white */
+        text-decoration: none; /* Remove underline */
+        border-radius: 4px; /* Add border radius */
+        transition: background-color 0.3s; /* Add transition effect */
+        margin: 30px; /* Add right margin to align with list items */
+    }
+    
+    .add-btn:hover {
+        background-color: #45a049; /* Change button color on hover */
+        text-decoration: none; /* Remove underline on hover */
+        cursor: pointer; /* Change cursor on hover */
+    }

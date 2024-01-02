@@ -15,6 +15,6 @@
             <li><a href="{% url 'thesis:university-detail' pk=university.pk %}">{{ university.name }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{% url 'thesis:university_create' %}">Add University</a>
+    <a href="{% url 'thesis:university_create' %}" class="add-btn">Add University</a>
 </body>
 </html>

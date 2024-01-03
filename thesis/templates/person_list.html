@@ -3,19 +3,23 @@
 
 <!DOCTYPE html>
 <html>
+<html lang="en">
 <head>
-    <title>Person List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/list2.css' %}">
 </head>
 <body>
     <h1>Person List</h1>
     <h3> Click the item you want to see details about </h3>
-    <ul>
-        {% for person in object_list %}
-            <li><a href="{% url 'thesis:person-detail' pk=person.pk %}">{{ person.name }} {{ person.surname }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'thesis:person_add' %}" class="add-btn">Add Person</a>
+    <nav class="custom-nav">
+        <ul class="custom-ul">
+            {% for person in object_list %}
+            <li class="custom-li"><a href="{% url 'thesis:person-detail' pk=person.pk %}" class="custom-link">{{ person.name }} {{ person.surname }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <a href="{% url 'thesis:person_add' %}" class="custom-add-btn">Add Person</a>
 </body>
 </html>

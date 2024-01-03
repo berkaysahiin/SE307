@@ -5,16 +5,18 @@
 <head>
     <title>Subject List</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/list2.css' %}"> 
 </head>
 <body>
     <h1>Subject List</h1>
     <h3> Click the item you want to see details about </h3>
-    <ul>
+    <nav class="custom-nav">
+        <ul class="custom-ul">
         {% for subject in object_list %}
-            <li><a href="{% url 'thesis:subject-detail' pk=subject.pk %}">{{ subject.topic }}</a></li>
+        <li class="custom-li"><a href="{% url 'thesis:subject-detail' pk=subject.pk %}" class="custom-link">{{ subject.topic }}</a></li>
         {% endfor %}
     </ul>
-    <a href="{% url 'thesis:subject_create' %}" class="add-btn">Add Subject</a>
+</nav>
+    <a href="{% url 'thesis:subject_create' %}" class="custom-add-btn">Add Subject</a>
 </body>
 </html>

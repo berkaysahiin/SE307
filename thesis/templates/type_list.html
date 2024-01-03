@@ -5,15 +5,17 @@
 <head>
     <title>Type List</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/list2.css' %}"> 
 </head>
 <body>
     <h1>Type List</h1>
     <h3> Click the item you want to see details about </h3>
-    <ul>
+    <nav class="custom-nav">
+        <ul class="custom-ul">
         {% for type in object_list %}
-            <li><a href="{% url 'thesis:type-detail' pk=type.pk %}">{{ type.type_name }}</a></li>
+        <li class="custom-li"><a href="{% url 'thesis:type-detail' pk=type.pk %}" class="custom-link">{{ type.type_name }}</a></li>
         {% endfor %}
     </ul>
+</nav>
 </body>
 </html>

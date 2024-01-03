@@ -5,16 +5,17 @@
 <head>
     <title>University List</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/list.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/list2.css' %}"> 
 </head>
 <body>
     <h1>University List</h1>
     <h3> Click the item you want see details about </h3>
-    <ul>
+    <nav class="custom-nav">
+        <ul class="custom-ul">
         {% for university in object_list %}
-            <li><a href="{% url 'thesis:university-detail' pk=university.pk %}">{{ university.name }}</a></li>
+        <li class="custom-li"><a href="{% url 'thesis:university-detail' pk=university.pk %}" class="custom-link">{{ university.name }}</a></li>
         {% endfor %}
-    </ul>
-    <a href="{% url 'thesis:university_create' %}" class="add-btn">Add University</a>
+    </ul>  </nav>
+    <a href="{% url 'thesis:university_create' %}" class="custom-add-btn">Add University</a>
 </body>
 </html>

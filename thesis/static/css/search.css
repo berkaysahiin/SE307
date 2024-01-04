@@ -93,3 +93,15 @@ input[type="submit"] {
     background-color: #45a049;
   }
   
+
+  /* Style for the table */
+  .thesis-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.thesis-table th, .thesis-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-wrap: break-word; /* Allow content to wrap within cells */
+}

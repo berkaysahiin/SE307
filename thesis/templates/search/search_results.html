@@ -17,40 +17,55 @@
     </form>
   
 
-    {% if results %}
-    <h2>Results:</h2>
-    <div class="search-container"> 
-    <ul>
-        {% for thesis in results %}
-            <li>
-                <a href="{% url 'thesis:thesis-detail' thesis.thesis_no %}">  <!-- Add this line -->
-                    <strong>Thesis No:</strong> {{ thesis.thesis_no}}<br>
-                    <!-- ... rest of the fields ... -->
-                </a>
-                <strong>Title:</strong> {{ thesis.title }}<br>
-                <strong>Author:</strong> {{ thesis.author }}<br>
-                <strong>Year:</strong> {{ thesis.year }}<br>
-                <strong>Type:</strong> {{ thesis.type }}<br>
-                <strong>University:</strong> {{ thesis.university }}<br>
-                <strong>Institute:</strong> {{ thesis.institute }}<br>
-                <strong>Number of Pages:</strong> {{ thesis.number_of_pages }}<br>
-                <strong>Language:</strong> {{ thesis.language }}<br>
-                <strong>Supervisor:</strong> {{ thesis.superviser }} <br>
-                {% if thesis.cosuperviser %}
-                    <strong>Co-Supervisor:</strong> {{ thesis.cosuperviser.cosuperviser}}<br>
-                {% endif %}
-                <strong>Submission Date:</strong> {{ thesis.submission_date }}<br>
-                <strong>Abstract:</strong> {{ thesis.abstract }}<br>
-                <strong>Keywords:</strong>
-                {% for keyword in thesis.keywords.all %}
-                    {{ keyword }}{% if not forloop.last %},{% endif %}
-                {% endfor %}
-            </li>
-        {% endfor %}
-    </ul>
-  </div> 
-
-{% endif %}
+ {% if results %}
+        <h2>Results:</h2>
+        <div class="search-container"> 
+            <table class="thesis-table">
+                <thead>
+                    <tr>
+                        <th>Thesis No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Year</th>
+                        <th>Type</th>
+                        <th>University</th>
+                        <th>Institute</th>
+                        <th>Number of Pages</th>
+                        <th>Language</th>
+                        <th>Supervisor</th>
+                        <th>Co-Supervisor</th>
+                        <th>Submission Date</th>
+                        <th>Abstract</th>
+                        <th>Keywords</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for thesis in results %}
+                        <tr>
+                            <td><a href="{% url 'thesis:thesis-detail' thesis.thesis_no %}">{{ thesis.thesis_no }}</a></td>
+                            <td>{{ thesis.title }}</td>
+                            <td>{{ thesis.author }}</td>
+                            <td>{{ thesis.year }}</td>
+                            <td>{{ thesis.type }}</td>
+                            <td>{{ thesis.university }}</td>
+                            <td>{{ thesis.institute }}</td>
+                            <td>{{ thesis.number_of_pages }}</td>
+                            <td>{{ thesis.language }}</td>
+                            <td>{{ thesis.superviser }}</td>
+                            <td>{% if thesis.cosuperviser %}{{ thesis.cosuperviser.cosuperviser }}{% endif %}</td>
+                            <td>{{ thesis.submission_date }}</td>
+                            <td>{{ thesis.abstract }}</td>
+                            <td>
+                                {% for keyword in thesis.keywords.all %}
+                                    {{ keyword }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 </body>
 </html> 
 

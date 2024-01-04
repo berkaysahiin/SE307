@@ -62,7 +62,7 @@ class SearchForm(forms.Form):
     years_choice = forms.ChoiceField(choices=YEARS_CHOICES, required=False, widget=forms.Select)
     year = forms.IntegerField(required=False)
     keywords = forms.CharField(max_length=255, required=False, help_text='Enter keywords separated by commas.')
-    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':50}),required=False)
+    abstract = forms.CharField(widget=forms.Textarea(attrs={'rows':1,'cols':60}),required=False)
 
 
 class ThesisForm(forms.ModelForm):

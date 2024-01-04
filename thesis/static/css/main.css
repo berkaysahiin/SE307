@@ -93,3 +93,38 @@ form {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
+
+  input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;   
+    transition: background-color 0.3s;
+    width: 10%; /* Make the button full width within its container */
+    margin-left: 30px;
+    
+  }
+  
+  /* Hover effect for submit button */
+  input[type="submit"]:hover,
+  .login-button:hover {
+    background-color: #45a049;
+  }
+
+  .login-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;   
+    transition: background-color 0.3s;
+    width: 10%; /* Make the button full width within its container */
+    text-decoration: none; 
+    margin-bottom: 30px;
+    position: relative; /* Use relative positioning */
+    top: 25px
+    
+}

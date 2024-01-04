@@ -3,7 +3,7 @@ import random
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University, Institute, Language
+from .models import Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University, Institute, Language, UniversityInstitute
 from thesis import models
 
 # class LoginForm(forms.Form):
@@ -96,6 +96,50 @@ class ThesisForm(forms.ModelForm):
         else:
             print('self.instance does not exist') 
 
+    def clean_year(self):
+        year = self.cleaned_data.get('year')
+        if year <= 0:
+            raise forms.ValidationError(
+                "Year should be greater than 0.",
+                code='invalid_year'
+            )
+        return year
+
+    def clean_number_of_pages(self):
+        number_of_pages = self.cleaned_data.get('number_of_pages')
+        if number_of_pages <= 0:
+            raise forms.ValidationError(
+                "Number of pages should be greater than 0.",
+                code='invalid_number_of_pages'
+            )
+        return number_of_pages
+
+    def clean(self):
+        cleaned_data = super().clean()
+        author = cleaned_data.get('author')
+        supervisor = cleaned_data.get('superviser')
+        cosupervisor = cleaned_data.get('cosuperviser')
+
+        if author == supervisor:
+            raise forms.ValidationError(
+                "Author cannot be the same person as the supervisor.",
+                code='author_same_as_supervisor'
+            )
+
+        if author == cosupervisor:
+            raise forms.ValidationError(
+                "Author cannot be the same person as the co-supervisor.",
+                code='author_same_as_cosupervisor'
+            )
+
+        if supervisor == cosupervisor:
+            raise forms.ValidationError(
+                "Supervisor cannot be the same person as the co-supervisor.",
+                code='supervisor_same_as_cosupervisor'
+            )
+
+        return cleaned_data
+   
     def save(self, commit=True):
         if not self.instance.pk: 
             self.instance.thesis_no = generate_unique_thesis_no()
@@ -144,7 +188,7 @@ class PersonForm(forms.ModelForm):
 # --- UNIVERSITY ---
 
 class UniversityForm(forms.ModelForm):
-    institutes = forms.CharField(max_length=255, required=False, help_text='Enter institutes separated by commas.')
+    institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=True)
 
     class Meta:
         model = University
@@ -154,31 +198,39 @@ class UniversityForm(forms.ModelForm):
         super(UniversityForm, self).__init__(*args, **kwargs)
 
         if self.instance:
-            initial_institutes = Institute.objects.filter(university=self.instance).values_list('name', flat=True)
-            initial_institutes = ', '.join(
-                Institute.objects.filter(university=self.instance).values_list('name', flat=True)
-            )
-
+            initial_institutes = UniversityInstitute.objects.filter(university_id=self.instance.university_id).values_list('institute_id', flat=True)
             self.fields['institutes'].initial = initial_institutes
 
+    def clean_establishment_year(self):
+        establishment_year = self.cleaned_data.get('establishment_year')
+        if establishment_year <= 0:
+            raise forms.ValidationError(
+                "Establishment year should be greater than 0.",
+                code='invalid_establishment_year'
+            )
+        return establishment_year
 
     def save(self, commit=True):
         if not self.instance.university_id:
             self.instance.university_id = generate_unique_university_id()
 
-        uni = super().save(commit=commit)
-
-        institutes = self.cleaned_data.get('institutes', '')
-        institute_list = [institute.strip() for institute in institutes.split(',')]
+        initial_institute_ids = UniversityInstitute.objects.filter(university_id=self.instance.university_id).values_list('institute_id', flat=True)
         
-        Institute.objects.filter(university=uni).delete()
+        for institute_id in initial_institute_ids:
+            if institute_id not in self.cleaned_data['institutes']:
+                UniversityInstitute.objects.filter(university_id=self.instance, institute_id=institute_id).delete()
 
-        for inst in institute_list:
-            Institute.objects.create(university=uni, name=inst, institute_id=generate_unique_institute_id())
+        # Add institutes that exist in the current form but not in initial
+        for institute_id in self.cleaned_data['institutes']:
+            if institute_id not in initial_institute_ids:
+                UniversityInstitute.objects.create(university_id=self.instance, institute_id=institute_id)
+
+
+        uni = super().save(commit=commit)
 
         return uni
 
-# --- INSTITUTE ---
+ # --- INSTITUTE ---
 
 class InstituteForm(forms.ModelForm):
 
@@ -227,6 +279,11 @@ class LanguageForm(forms.ModelForm):
         
         lang = super().save(commit=commit)
         return lang
+
+    def delete(self, *args, **kwargs):
+        thesis = Thesis.objects.filter(langauge_id=self.language_id)
+        print(f'--------------------{thesis}--------------')
+
 
 # --- UTILITIES ---
 

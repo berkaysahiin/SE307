@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University
+from .models import Institute, Language, Person, Subject, Thesis, ThesisKeyword, ThesisSubject, Type, University, UniversityInstitute
 
 # Register your models here.
 @admin.register(Institute)
 class InstituteAdmin(admin.ModelAdmin):
-    list_display = ('institute_id', 'name', 'university')
+    list_display = ('institute_id', 'name')
 
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
@@ -37,3 +37,7 @@ class TypeAdmin(admin.ModelAdmin):
 @admin.register(University)
 class UniversityAdmin(admin.ModelAdmin):
     list_display = ('university_id', 'name', 'establishment_year')
+
+@admin.register(UniversityInstitute)
+class UniversityAdmin(admin.ModelAdmin):
+    list_display = ('university_id', 'institute_id')

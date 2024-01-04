@@ -3,7 +3,6 @@ from django.db import models
 class Institute(models.Model):
     institute_id = models.IntegerField(db_column='INSTITUTE_ID', primary_key=True) 
     name = models.CharField(db_column='NAME', max_length=255, db_collation='Turkish_CI_AS')  
-    university = models.ForeignKey('University', on_delete=models.CASCADE, db_column='UNIVERSITY_ID')
 
     class Meta:
         managed = False
@@ -122,13 +121,23 @@ class University(models.Model):
     name = models.CharField(db_column='NAME', max_length=255, db_collation='Turkish_CI_AS')  
     establishment_year = models.SmallIntegerField(db_column='ESTABLISHMENT_YEAR')  
 
-    @property
-    def institutes(self):
-        return Institute.objects.filter(university_id=self.university_id)
-
     class Meta:
         managed = False
         db_table = 'UNIVERSITY'
 
+    @property
+    def institutes(self):
+        institute_ids = UniversityInstitute.objects.filter(university_id=self.university_id).values_list('institute_id', flat=True)
+        return Institute.objects.filter(institute_id__in=institute_ids)
+
     def __str__(self) -> str:
         return f'{self.name}'
+
+class UniversityInstitute(models.Model):
+    university_id = models.OneToOneField(University, on_delete=models.CASCADE, db_column='UNIVERSITY_ID', primary_key=True)
+    institute_id = models.ForeignKey(Institute, on_delete=models.CASCADE, db_column='INSTITUTE_ID')
+
+    class Meta:
+        managed = False
+        db_table = 'UNIVERSITY_INSTITUTE'
+        unique_together = (('university_id', 'institute_id'),)

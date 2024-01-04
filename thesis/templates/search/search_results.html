@@ -4,20 +4,11 @@
     <title>Search Results</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/search.css' %}"> 
+    
 </head>
 {% include 'header.html' %}
-<body>
-    <h1>Search Results</h1>
-    <h3> Leave fields blank to ignore them in the search.  </h3>
-    <form method="get" action="{% url 'thesis:search' %}" class="search-form">
-        <div class="form-container">      
-        {{ form.as_p }}
-      </div>     
-        <input type="submit" value="submit">
-    </form>
-  
 
- {% if results %}
+{% if results %}
         <h2>Results:</h2>
         <div class="search-container"> 
             <table class="thesis-table">
@@ -52,7 +43,7 @@
                             <td>{{ thesis.number_of_pages }}</td>
                             <td>{{ thesis.language }}</td>
                             <td>{{ thesis.superviser }}</td>
-                            <td>{% if thesis.cosuperviser %}{{ thesis.cosuperviser.cosuperviser }}{% endif %}</td>
+                            <td>{% if thesis.cosuperviser %}{{ thesis.cosuperviser }}{% endif %}</td>
                             <td>{{ thesis.submission_date }}</td>
                             <td>{{ thesis.abstract }}</td>
                             <td>
@@ -68,4 +59,18 @@
     {% endif %}
 </body>
 </html> 
+
+
+<body>
+    <h1>Search Results</h1>
+    <h3> Leave fields blank to ignore them in the search.  </h3>
+    <form method="get" action="{% url 'thesis:search' %}" class="search-form">
+        <div class="form-container">      
+        {{ form.as_p }}
+      </div>     
+        <input type="submit" value="submit">
+    </form>
+  
+
+ 
 

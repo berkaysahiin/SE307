@@ -56,13 +56,19 @@
     <li><strong>University:</strong> {{ object.university }}</li>
     <li><strong>Institute:</strong> {{ object.institute }}</li>
     <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
-    <li><strong>Language:</strong> {{ object.language }}</li>
+    <li><strong>Language:</strong>
+        {% if object.language %}
+            {{ object.language|join:", " }}
+        {% else %}
+            Unknown
+        {% endif %}
+    </li>
     <li><strong>Supervisor:</strong> {{ object.superviser }}</li>
     <li><strong>Cosuperviser:</strong>
         {% if object.cosuperviser %}
             {{ object.cosuperviser|join:", " }}
         {% else %}
-            -
+            Unknown
         {% endif %}
     </li>
     <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>

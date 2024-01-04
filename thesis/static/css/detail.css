@@ -21,10 +21,39 @@ h3 {
     margin: 30px;
     }
 
-ul{ line-height:2;
-    margin: 30px; }
 
-p {
+
+
+.custom-ul {
+    line-height: 2;
     margin: 30px;
-    font-size: 1.2em; 
+    list-style-type: none;
+    padding: 20px;
+    background: linear-gradient(to bottom, #F5DEB3, antiquewhite);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.custom-li {
+    margin-bottom: 10px;
+}
+
+.custom-li strong {
+    font-weight: bold;
+}
+
+.custom-link {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 40px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.custom-link:hover {
+    background-color: #45a049;
 }

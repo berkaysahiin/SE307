@@ -8,9 +8,11 @@
 </head>
 <body>
     <h1>Subject Detail</h1>
-    <p>Topic: {{ object.topic }}</p>
+    <ul class="custom-ul">
+    <li class="custom-li"><strong>Topic: </strong>{{ object.topic }}</li>
     <!-- Add more details as needed -->
+    </ul>
 </body>
-    <a href="{% url 'thesis:subject_update' pk=object.subject_id %}">Edit Subject</a>
-    <a href="{% url 'thesis:subject_delete' pk=object.subject_id %}">Delete Subject</a>
+    <a href="{% url 'thesis:subject_update' pk=object.subject_id %}" class="custom-link">Edit Subject</a>
+    <a href="{% url 'thesis:subject_delete' pk=object.subject_id %}" class="custom-link">Delete Subject</a>
 </html>

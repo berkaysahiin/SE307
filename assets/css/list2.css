@@ -35,14 +35,13 @@ h3 {
 }
 
 .custom-li {
-    background: linear-gradient(to bottom, #F5DEB3, antiquewhite);
-    border: 1px solid #ddd;
+    background: #faebd7;
+    border: 10px solid black;
     margin-bottom: 10px;
-    text-align: left;
-    max-width: 200px;
+    text-align: middle;
+    max-width: 400px;
     margin: 25px 20px 20px 50px;
-    border-radius: 8px;
-    padding: 8px;
+    border-radius: 18px;
 }
 
 .custom-link {
@@ -72,4 +71,14 @@ h3 {
 .custom-add-btn:hover {
     background-color: #45a049;
 }
-      
+
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 2px solid black; /* Set border to black and thicker */
+    padding: 8px;
+}

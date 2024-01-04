@@ -9,17 +9,19 @@
 </head>
 <body>
     <h1>University Detail</h1>
-    <p>Name: {{ object.name }}</p>
-    <p>Establishment Year: {{ object.establishment_year }}</p>
-    <p>Institutes: 
+    <ul class="custom-ul">
+    <li class="custom-li"><strong>Name:</strong> {{ object.name }}</li>
+    <li class="custom-li"><strong>Establishment Year: </strong>{{ object.establishment_year }}</li>
+    <li class="custom-li"><strong>Institutes: </strong>
         {% if object.institutes %}
             {{ object.institutes|join:", " }}
         {% else %}
             No institute available.
         {% endif %}
-    </p>
+    </li>
     <!-- Add more details as needed -->
+</ul>
 </body>
-    <a href="{% url 'thesis:university_update' pk=object.university_id %}">Edit University</a>
-    <a href="{% url 'thesis:university_delete' pk=object.university_id %}">Delete University</a>
+    <a href="{% url 'thesis:university_update' pk=object.university_id %}" class="custom-link">Edit University</a>
+    <a href="{% url 'thesis:university_delete' pk=object.university_id %}" class="custom-link">Delete University</a>
 </html>

@@ -4,82 +4,44 @@
 <html>
 <head>
     <title>Thesis Information</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        strong {
-            font-weight: bold;
-        }
-
-        a {
-            display: inline-block;
-            padding: 10px;
-            margin-top: 10px;
-            text-align: center;
-            text-decoration: none;
-            color: #fff;
-            background-color: #333;
-            border-radius: 5px;
-        }
-
-        a:hover {
-            background-color: #555;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 </head>
 <body>
 
-<ul>
-    <li><strong>Thesis Number:</strong> {{ object.thesis_no }}</li>
-    <li><strong>Title:</strong> {{ object.title }}</li>
-    <li><strong>Abstract:</strong> {{ object.abstract }}</li>
-    <li><strong>Author:</strong> {{ object.author }}</li>
-    <li><strong>Year:</strong> {{ object.year }}</li>
-    <li><strong>Type:</strong> {{ object.type }}</li>
-    <li><strong>University:</strong> {{ object.university }}</li>
-    <li><strong>Institute:</strong> {{ object.institute }}</li>
-    <li><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
-    <li><strong>Language:</strong>
+<ul class="custom-ul">
+    <li class="custom-li"><strong>Thesis Number:</strong> {{ object.thesis_no }}</li>
+    <li class="custom-li"><strong>Title:</strong> {{ object.title }}</li>
+    <li class="custom-li"><strong>Abstract:</strong> {{ object.abstract }}</li>
+    <li class="custom-li"><strong>Author:</strong> {{ object.author }}</li>
+    <li class="custom-li"><strong>Year:</strong> {{ object.year }}</li>
+    <li class="custom-li"><strong>Type:</strong> {{ object.type }}</li>
+    <li class="custom-li"><strong>University:</strong> {{ object.university }}</li>
+    <li class="custom-li"><strong>Institute:</strong> {{ object.institute }}</li>
+    <li class="custom-li"><strong>Number of Pages:</strong> {{ object.number_of_pages }}</li>
+    <li class="custom-li"><strong>Language:</strong> {{ object.language }}
         {% if object.language %}
-            {{ object.language|join:", " }}
-        {% else %}
-            Unknown
-        {% endif %}
-    </li>
-    <li><strong>Supervisor:</strong> {{ object.superviser }}</li>
-    <li><strong>Cosuperviser:</strong>
+        {{ object.language|join:", " }}
+    {% else %}
+        Unknown
+    {% endif %}</li>
+    <li class="custom-li"><strong>Supervisor:</strong> {{ object.superviser }}</li>
+    <li class="custom-li"><strong>Cosuperviser:</strong>
         {% if object.cosuperviser %}
             {{ object.cosuperviser|join:", " }}
         {% else %}
             Unknown
         {% endif %}
     </li>
-    <li><strong>Submission Date:</strong> {{ object.submission_date }}</li>
-    <li><strong>Keywords:</strong>
+    <li class="custom-li"><strong>Submission Date:</strong> {{ object.submission_date }}</li>
+    <li class="custom-li"><strong>Keywords:</strong>
         {% if object.keywords %}
             {{ object.keywords|join:", " }}
         {% else %}
             No keywords available.
         {% endif %}
     </li>
-    <li><strong>Subjects:</strong>
+    <li class="custom-li"><strong>Subjects:</strong>
         {% if object.subjects %}
             {{ object.subjects|join:", " }}
         {% else %}
@@ -88,8 +50,8 @@
     </li>
 </ul>
 
-<a href="{% url 'thesis:thesis_edit' pk=object.thesis_no %}">Edit Thesis</a>
-<a href="{% url 'thesis:thesis_delete' pk=object.thesis_no %}">Delete Thesis</a>
+<a href="{% url 'thesis:thesis_edit' pk=object.thesis_no %}" class="custom-link">Edit Thesis</a>
+<a href="{% url 'thesis:thesis_delete' pk=object.thesis_no %}" class="custom-link">Delete Thesis</a>
 
 </body>
 </html>

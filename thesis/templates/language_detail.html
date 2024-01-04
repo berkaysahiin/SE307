@@ -9,8 +9,10 @@
 </head>
 <body>
     <h1>Language Detail</h1>
-    <p>Name: {{ object.language_name }}</p>
+    <ul class="custom-ul">
+    <li class="custom-li"><strong>Name: </strong>{{ object.language_name }}</li>
+    </ul>
 </body>
-    <a href="{% url 'thesis:language_update' pk=object.language_id %}">Edit Language</a>
-    <a href="{% url 'thesis:language_delete' pk=object.language_id %}">Delete Language</a>
+    <a href="{% url 'thesis:language_update' pk=object.language_id %}" class="custom-link">Edit Language</a>
+    <a href="{% url 'thesis:language_delete' pk=object.language_id %}" class="custom-link">Delete Language</a>
 </html>

@@ -4,26 +4,125 @@
     <title>Main Page</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <style>
+        body {
+            background: linear-gradient(to bottom, antiquewhite 40%, floralwhite);
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: left;
+            font-family: "Arial", sans-serif;
+            font-size: 2.5em;
+            color: #333;
+            margin: 50px 0;
+            text-shadow: 1px 1px 2px #ccc;
+            margin: 30px;
+        }
+
+        h3 {
+            font-family: "Arial", sans-serif;
+            font-size: 1em;
+            color: #333;
+            margin: 30px 0;
+            text-shadow: 1px 1px 2px #ccc;
+            margin: 30px;
+        }
+
+        .custom-nav {
+            margin: 20px;
+        }
+
+        .custom-ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .custom-li {
+            background: linear-gradient(to bottom, #F5DEB3, antiquewhite);
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            text-align: left;
+            max-width: 200px;
+            margin: 25px 20px 20px 50px;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .custom-link {
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            color: #333;
+            width: 100%;
+        }
+
+        .custom-link:hover {
+            background-color: #ddd;
+        }
+
+        .custom-add-btn {
+            display: block;
+            margin: 20px 20px 20px 50px;
+            padding: 10px 20px;
+            max-width: 200px;
+            background-color: #4caf50;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .custom-add-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Additional styles for the models-list */
+        .models-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .models-list li {
+            margin-bottom: 10px;
+        }
+
+        .models-list a {
+            display: block;
+            padding: 10px;
+            background-color: #F5DEB3; /* Match the color from .custom-li */
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .models-list a:hover {
+            background-color: #ddd;
+        }
+    </style>
 </head>
 {% include 'header.html'%}
 <body>
-    
     <h1>Main Page</h1>
-    <h3> Click the item you want to see. </h3>
+    <h3>Click the item you want to see.</h3>
     <div class="models">
-    <h2>Models:</h2>
-    <ul class="models-list">
-        <li><a href="{% url 'thesis:language-list' %}">Language List</a></li>
-        <li><a href="{% url 'thesis:person-list' %}">Person List</a></li>
-        <li><a href="{% url 'thesis:subject-list' %}">Subject List</a></li>
-        <li><a href="{% url 'thesis:thesis-list' %}">Thesis List</a></li>
-        <li><a href="{% url 'thesis:type-list' %}">Type List</a></li>
-        <li><a href="{% url 'thesis:university-list' %}">University List</a></li>
-        <li><a href="{% url 'thesis:institute-list' %}">Insitute List</a></li>
-    </ul>
+        <h2>Database:</h2>
+        <ul class="models-list">
+            <li><a href="{% url 'thesis:language-list' %}">Language List</a></li>
+            <li><a href="{% url 'thesis:person-list' %}">Person List</a></li>
+            <li><a href="{% url 'thesis:subject-list' %}">Subject List</a></li>
+            <li><a href="{% url 'thesis:thesis-list' %}">Thesis List</a></li>
+            <li><a href="{% url 'thesis:type-list' %}">Type List</a></li>
+            <li><a href="{% url 'thesis:university-list' %}">University List</a></li>
+            <li><a href="{% url 'thesis:institute-list' %}">Insitute List</a></li>
+        </ul>
     </div>
 </body>
 </html>
+
 
 
 <!--- <div class="container">

@@ -4,14 +4,22 @@
             <h3 style="margin-right: 10px;">Thesis app</h3>
             <nav style="padding: 10px;">
                 <ul style="list-style-type: none; margin: 0; padding: 0; display: flex; align-items: center;">
-                    <li style="margin-right: 10px;"><a href="{% url 'thesis:search' %}">Search</a></li>
-                    <li style="margin-right: 10px;"><a href="{% url 'thesis:main' %}">Add</a></li>
-                    
+
+                    <!-- Search button -->
+                    <li style="margin-right: 10px;"><a href="{% url 'thesis:search' %}" style="text-decoration: none; padding: 8px 16px; background-color: #4CAF50; color: white; border-radius: 5px;">Search</a></li>
+
+                    <!-- Add button -->
+                    <li style="margin-right: 10px;"><a href="{% url 'thesis:main' %}" style="text-decoration: none; padding: 8px 16px; background-color: #008CBA; color: white; border-radius: 5px;">Add</a></li>
+
                     {% if user.is_authenticated %}
-                        <li style="margin-right: 10px;"><a href="/logout">Logout</a></li>
+                        <!-- Logout button -->
+                        <li style="margin-right: 10px;"><a href="/logout" style="text-decoration: none; padding: 8px 16px; background-color: #f44336; color: white; border-radius: 5px;">Logout</a></li>
                     {% else %}
-                        <li style="margin-right: 10px;"><a href="/signup">Signup</a></li>
-                        <li style="margin-right: 10px;"><a href="/login">Login</a></li>
+                        <!-- Signup button -->
+                        <li style="margin-right: 10px;"><a href="/signup" style="text-decoration: none; padding: 8px 16px; background-color: #008CBA; color: white; border-radius: 5px;">Signup</a></li>
+
+                        <!-- Login button -->
+                        <li style="margin-right: 10px;"><a href="/login" style="text-decoration: none; padding: 8px 16px; background-color: #4CAF50; color: white; border-radius: 5px;">Login</a></li>
                     {% endif %}
                     
                     <!-- add edit page to links maybe -->

@@ -58,11 +58,11 @@ class Thesis(models.Model):
     year = models.SmallIntegerField(db_column='YEAR')  
     type = models.ForeignKey('Type', models.PROTECT, db_column='TYPE_ID')  
     university = models.ForeignKey('University', models.PROTECT, db_column='UNIVERSITY_ID')  
-    institute = models.ForeignKey(Institute, on_delete=models.PROTECT, db_column='INSTITUTE_ID')  
+    institute = models.ForeignKey(Institute, on_delete=models.SET_NULL, db_column='INSTITUTE_ID', null=True)  
     number_of_pages = models.IntegerField(db_column='NUMBER_OF_PAGES') 
-    language = models.ForeignKey(Language, on_delete=models.PROTECT, db_column='LANGUAGE_ID') 
-    superviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='SUPERVISER', related_name='thesis_superviser_set')  # Field name made lowercase.
-    cosuperviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
+    language = models.ForeignKey(Language, on_delete=models.SET_NULL, db_column='LANGUAGE_ID', null=True) 
+    superviser = models.ForeignKey(Person, on_delete=models.SET_NULL, db_column='SUPERVISER', related_name='thesis_superviser_set', null=True)  # Field name made lowercase.
+    cosuperviser = models.ForeignKey(Person, on_delete=models.SET_NULL, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
     submission_date = models.DateField(db_column='SUBMISSION_DATE')  
 
     @property

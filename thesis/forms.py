@@ -188,7 +188,7 @@ class PersonForm(forms.ModelForm):
 # --- UNIVERSITY ---
 
 class UniversityForm(forms.ModelForm):
-    institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=True)
+    institutes = forms.ModelMultipleChoiceField(queryset=Institute.objects.all(), required=False)
 
     class Meta:
         model = University
@@ -214,21 +214,25 @@ class UniversityForm(forms.ModelForm):
         if not self.instance.university_id:
             self.instance.university_id = generate_unique_university_id()
 
+        uni = super().save(commit=commit)
+
         initial_institute_ids = UniversityInstitute.objects.filter(university_id=self.instance.university_id).values_list('institute_id', flat=True)
         
         for institute_id in initial_institute_ids:
             if institute_id not in self.cleaned_data['institutes']:
                 UniversityInstitute.objects.filter(university_id=self.instance, institute_id=institute_id).delete()
 
-        # Add institutes that exist in the current form but not in initial
         for institute_id in self.cleaned_data['institutes']:
-            if institute_id not in initial_institute_ids:
+            if (not initial_institute_ids) or (institute_id not in initial_institute_ids):
                 UniversityInstitute.objects.create(university_id=self.instance, institute_id=institute_id)
 
-
-        uni = super().save(commit=commit)
+        return uni
 
         return uni
+    def delete(self, commit=True):
+        thesis_list = Thesis.objects.filter(university=self)
+        print(thesis_list)
+        super(UniversityForm, self).delete(commit=commit)
 
  # --- INSTITUTE ---
 

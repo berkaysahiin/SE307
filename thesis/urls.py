@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ErrorPageView, LanguageDeleteView, PersonDeleteView, SubjectDeleteView, ThesisDeleteView, UniversityDeleteView, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
+from .views import ErrorPageView, InstituteDeleteView, InstituteUpdateView, LanguageDeleteView, PersonDeleteView, SubjectDeleteView, ThesisDeleteView, UniversityDeleteView, InstituteCreateView, LanguageCreateView, LanguageUpdateView, PersonCreateView, PersonUpdateView, SubjectCreateView, SubjectUpdateView, UniversityCreateView, UniversityUpdateView, main, search_view, ThesisCreateView, ThesisUpdateView
 from thesis import views
 from django.contrib.auth import views as auth_views
 
@@ -53,6 +53,8 @@ urlpatterns = [
     path('university/<int:pk>/delete', UniversityDeleteView.as_view(), name='university_delete'),
 
     path('institute/add', InstituteCreateView.as_view(), name='institute_create'),
+    path('institute/<int:pk>/edit', InstituteUpdateView.as_view(), name='institute_update'),
+    path('institute/<int:pk>/delete', InstituteDeleteView.as_view(), name='institute_delete'),
 
     path('subject/add', SubjectCreateView.as_view(), name='subject_create'),
     path('subject/<int:pk>/edit', SubjectUpdateView.as_view(), name='subject_update'),

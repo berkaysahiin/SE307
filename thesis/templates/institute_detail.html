@@ -1,7 +1,6 @@
 {% include "header.html"%}
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>Institute Detail</title>
@@ -10,8 +9,10 @@
 </head>
 <body>
     <h1>Institute Detail</h1>
-    <p>Name: {{ object.name }}</p>
-    <p>University: {{ object.university.name }}</p>
-    <!-- Add more details as needed -->
+    <ul class="custom-ul">
+    <li class="custom-li"><strong>Name: </strong>{{ object }}</li>
+    </ul>
 </body>
+    <a href="{% url 'thesis:institute_update' pk=object.institute_id %}" class="custom-link">Edit Institute</a>
+    <a href="{% url 'thesis:institute_delete' pk=object.institute_id %}" class="custom-link">Delete Institute</a>
 </html>

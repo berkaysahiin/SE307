@@ -268,6 +268,17 @@ class InstituteCreateView(LoginRequiredMixin,CreateView):
     form_class = InstituteForm
     success_url = '/institute'
 
+class InstituteUpdateView(LoginRequiredMixin,UpdateView):
+    model = Institute
+    template_name =  'institute_form.html'
+    form_class = InstituteForm
+    success_url = '/institute'
+
+class InstituteDeleteView(LoginRequiredMixin,DeleteView):
+    model = Institute
+    template_name = 'delete_confirm.html'
+    success_url = '/institute/'
+
 # --- SUBJECT ---
     
 class SubjectCreateView(LoginRequiredMixin,CreateView):

@@ -1,25 +1,21 @@
-<!--WILL NOT BE USED-->
-
 {% include "header.html"%}
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
-    <title>Institute List</title>  
+    <title>Subject List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/list2.css' %}"> 
 </head>
 <body>
     <h1>Institute List</h1>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-        </tr>
+    <h3> Click the item you want to see details about </h3>
+    <nav class="custom-nav">
+        <ul class="custom-ul">
         {% for institute in object_list %}
-            <tr>
-                <td>{{ institute.institute_id }}</td>
-                <td><a href="{% url 'thesis:institute-detail' pk=institute.pk %}">{{ institute.name }}</a></td>
-            </tr>
+        <li class="custom-li"><a href="{% url 'thesis:institute-detail' pk=institute.pk %}" class="custom-link">{{ institute }}</a></li>
         {% endfor %}
-    </table>
-    <a href="{% url 'thesis:institute_create' %}" class="custom-add-btn">Add University</a>
+    </ul>
+</nav>
+    <a href="{% url 'thesis:institute_create' %}" class="custom-add-btn">Add Institute</a>
 </body>
 </html>

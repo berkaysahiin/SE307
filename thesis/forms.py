@@ -235,7 +235,7 @@ class UniversityForm(forms.ModelForm):
 class InstituteForm(forms.ModelForm):
 
     class Meta:
-        model = University
+        model = Institute
         fields = ['name']
 
     def save(self, commit=True):

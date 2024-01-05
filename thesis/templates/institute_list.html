@@ -12,15 +12,14 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>University</th>
         </tr>
         {% for institute in object_list %}
             <tr>
                 <td>{{ institute.institute_id }}</td>
                 <td><a href="{% url 'thesis:institute-detail' pk=institute.pk %}">{{ institute.name }}</a></td>
-                <td>{{ institute.university.name }}</td>
             </tr>
         {% endfor %}
     </table>
+    <a href="{% url 'thesis:institute_create' %}" class="custom-add-btn">Add University</a>
 </body>
 </html>

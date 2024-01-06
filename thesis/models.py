@@ -54,15 +54,15 @@ class Thesis(models.Model):
     thesis_no = models.DecimalField(db_column='THESIS_NO', primary_key=True, max_digits=7, decimal_places=0)  
     title = models.CharField(db_column='TITLE', max_length=500, db_collation='Turkish_CI_AS')  
     abstract = models.CharField(db_column='ABSTRACT', max_length=4000, db_collation='Turkish_CI_AS')  
-    author = models.ForeignKey(Person, on_delete=models.SET_NULL, db_column='AUTHOR_ID', null=True)  
+    author = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='AUTHOR_ID')  
     year = models.SmallIntegerField(db_column='YEAR')  
-    type = models.ForeignKey('Type', models.SET_NULL, db_column='TYPE_ID', null=True)  
-    university = models.ForeignKey('University', models.SET_NULL, db_column='UNIVERSITY_ID', null=True)  
-    institute = models.ForeignKey(Institute, on_delete=models.SET_NULL, db_column='INSTITUTE_ID', null=True)  
+    type = models.ForeignKey('Type', models.PROTECT, db_column='TYPE_ID')  
+    university = models.ForeignKey('University', models.PROTECT, db_column='UNIVERSITY_ID')  
+    institute = models.ForeignKey(Institute, on_delete=models.PROTECT, db_column='INSTITUTE_ID')  
     number_of_pages = models.IntegerField(db_column='NUMBER_OF_PAGES') 
-    language = models.ForeignKey(Language, on_delete=models.SET_NULL, db_column='LANGUAGE_ID', null=True) 
-    superviser = models.ForeignKey(Person, on_delete=models.SET_NULL, db_column='SUPERVISER', related_name='thesis_superviser_set', null=True)  # Field name made lowercase.
-    cosuperviser = models.ForeignKey(Person, on_delete=models.SET_NULL, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True, null=True)  # Field name made lowercase.
+    language = models.ForeignKey(Language, on_delete=models.PROTECT, db_column='LANGUAGE_ID') 
+    superviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='SUPERVISER', related_name='thesis_superviser_set')  # Field name made lowercase.
+    cosuperviser = models.ForeignKey(Person, on_delete=models.PROTECT, db_column='COSUPERVISER', related_name='thesis_cosuperviser_set', blank=True)  # Field name made lowercase.
     submission_date = models.DateField(db_column='SUBMISSION_DATE')  
 
     @property
